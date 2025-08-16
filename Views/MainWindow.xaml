@@ -30,25 +30,43 @@
             Text="Aplikacja Folderowa" 
             FontSize="20" 
             FontWeight="Bold"
+            BorderThickness="0"
         />
-        <Button Grid.Column="2">
+        <Button 
+            Grid.Row="0" 
+            Grid.Column="2" 
+            BorderThickness="0"
+            Width="35"
+            HorizontalAlignment="Right"
+            Background="White"
+            Margin="5,5,5,5"
+        >
             <materialIcons:MaterialIcon Kind="Cog"/>
         </Button>
 
         <!-- row 1 -->
-        <Button Grid.Row="1" Grid.Column="0">
+        <Button 
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,5,5,5"
+        >
             <StackPanel Orientation="Horizontal">
-                <materialIcons:MaterialIcon Kind="Folder"/>
-                <TextBlock Text="Użyj szablonu" Margin="5,0,0,0" FontSize="18"/>
+                <materialIcons:MaterialIcon Kind="Folder" Margin="0,0,10,0"/>
+                <TextBlock 
+                    Text="Użyj szablonu" 
+                    HorizontalAlignment="Center" 
+                    FontSize="14"
+                />
             </StackPanel>
         </Button>
         
         <TextBox 
             Text="Szukaj szablonu..." 
-            FontSize="18" 
+            FontSize="14"
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="2"
+            Margin="5,5,0,5"
         />
 
         <!-- row 2 -->
@@ -63,6 +81,7 @@
 
         <!-- row 3 -->
         <ListBox
+            FontSize="14"
             Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="3"
@@ -75,18 +94,24 @@
         <!-- row 4 -->
         <Button
             Content="Nowy szablon"
+            FontSize="14"
             Grid.Row="4"
             Grid.Column="0"
+            Margin="0,5,5,0"
         />
         <Button
             Content="Edytuj szablon"
+            FontSize="14"
             Grid.Row="4"
             Grid.Column="1"
+            Margin="5,5,5,0"
         />
         <Button
             Content="Usuń szablon"
+            FontSize="14"
             Grid.Row="4"
             Grid.Column="2"
+            Margin="5,5,0,0"
         />
     </Grid>
 </Window>
