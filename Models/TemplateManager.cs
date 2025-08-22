@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.Json;
 
 namespace FolderCreator.Models
@@ -33,6 +34,37 @@ namespace FolderCreator.Models
             string json = File.ReadAllText(filePath);
 
             return JsonSerializer.Deserialize<Template>(json);
+        }
+
+        public static ObservableCollection<Template> GetAllTemplates()
+        {
+            var templates = new ObservableCollection<Template>();
+            if (!Directory.Exists(TemplatesDirectory))
+            {
+                return templates;
+            }
+
+            foreach (var file in Directory.GetFiles(TemplatesDirectory, "*.json"))
+            {
+                string json = File.ReadAllText(file);
+                var template = JsonSerializer.Deserialize<Template>(json);
+                if (template != null)
+                {
+                    templates.Add(template);
+                }
+            }
+            return templates;
+        }
+
+        public static IEnumerable<string?> GetTemplateNames()
+        {
+            if (!Directory.Exists(TemplatesDirectory))
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            return Directory.GetFiles(TemplatesDirectory, "*.json")
+                            .Select(Path.GetFileNameWithoutExtension);
         }
     }
 }
