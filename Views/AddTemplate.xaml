@@ -4,9 +4,70 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FolderCreator.Views"
+        xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
         mc:Ignorable="d"
-        Title="AddTemplate" Height="450" Width="800">
-    <Grid>
-        
+        Title="Nowy szablon" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="IconButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#DDDDDD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#BBBBBB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Folder Path Input -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Label Content="Ścieżka nowego folderu:"/>
+            <TextBox x:Name="NewFolderTextBox" Width="200"/>
+            <Button Content="Dodaj do szablonu" Margin="5,0,0,0" Click="AddButton_Click"/>
+        </StackPanel>
+
+        <!-- List of Folder Paths -->
+        <ListView Grid.Row="1" x:Name="FolderListView" ItemsSource="{Binding Folders}" BorderThickness="0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5,2">
+                        <materialIcons:MaterialIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path}" VerticalAlignment="Center" Margin="5,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Zapisz szablon" Margin="0,0,5,0" Click="SaveTemplateButton_Click"/>
+            <Button Content="Anuluj" Click="CancelButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

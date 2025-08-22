@@ -28,7 +28,7 @@ namespace FolderCreator.ViewModels
         {
             AddTemplate addTemplate = new AddTemplate();
 
-            addTemplate.Show();
+            addTemplate.ShowDialog();
         }
     }
 }
