@@ -121,6 +121,7 @@
 
         <!-- row 4 -->
         <Button
+            Command="{Binding AddTemplateCommand}"
             Grid.Row="4"
             Grid.Column="0"
             Margin="0,5,5,0"
