@@ -47,19 +47,14 @@
 
         <!-- List of Folder Paths -->
         <ListView Grid.Row="1" x:Name="FolderListView" ItemsSource="{Binding Folders}" BorderThickness="0">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="5,2">
-                        <materialIcons:MaterialIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,5,0" />
-                        <TextBlock Text="{Binding Path}" VerticalAlignment="Center" Margin="5,0"/>
-                    </StackPanel>
+                    <DockPanel>
+                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                        <Button DockPanel.Dock="Right" Click="RemoveButton_Click" Tag="{Binding}">
+                            <materialIcons:MaterialIcon Kind="Delete" Width="16" Height="16"/>
+                        </Button>
+                    </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

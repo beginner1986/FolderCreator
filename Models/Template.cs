@@ -15,7 +15,7 @@ namespace FolderCreator.Models
 
                 foreach (var folder in Folders)
                 {
-                    var matches = regex.Matches(folder.Path);
+                    var matches = regex.Matches(folder.Name);
                     foreach (Match match in matches)
                     {
                         variables.Add(match.Groups[1].Value);

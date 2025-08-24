@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FolderCreator" xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+        xmlns:local="clr-namespace:FolderCreator" 
+        xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="500"
         ResizeMode="NoResize">
@@ -82,42 +83,31 @@
         />
 
         <!-- row 3 -->
-        <ListView
-            FontSize="14"
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Margin="0,5,0,0"
-            ItemsSource="{Binding Templates}"
-        >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <materialIcons:MaterialIcon 
-                                Kind="FolderOutline" 
-                                VerticalAlignment="Center" 
-                                Margin="0,0,10,0"
-                            />
-                            <TextBlock 
-                                Text="{Binding Name}" 
-                                VerticalAlignment="Center"
-                            />
-                        </StackPanel>
-                        <ItemsControl ItemsSource="{Binding Folders}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                                        <materialIcons:MaterialIcon Kind="FolderOutline" Margin="0,0,5,0"/>
-                                        <TextBlock Text="{Binding Path}" Margin="0,0,10,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+        <TreeView ItemsSource="{Binding Templates}" FontSize="14"
+          Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,5,0,0">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Folders}">
+                    <HierarchicalDataTemplate.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </HierarchicalDataTemplate.ItemContainerStyle>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <materialIcons:MaterialIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                     </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Subfolders}">
+                            
+                            <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
+                                <materialIcons:MaterialIcon Kind="Folder" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
 
         <!-- row 4 -->
         <Button

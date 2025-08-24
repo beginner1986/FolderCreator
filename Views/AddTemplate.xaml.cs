@@ -22,7 +22,7 @@ namespace FolderCreator.Views
 
             if (!string.IsNullOrEmpty(path))
             {
-                Folders.Add(new TemplateFolder { Path = path });
+                Folders.Add(new TemplateFolder(path));
                 NewFolderTextBox.Clear();
                 SortFolders();
             }
@@ -60,7 +60,11 @@ namespace FolderCreator.Views
 
         private void SortFolders()
         {
-            var sortedFolders = Folders.OrderBy(f => f.Path).ToList();
+            var sortedFolders = Folders.OrderBy(f => f.Name).ToList();
+            foreach (var folder in sortedFolders)
+            {
+                folder.Subfolders = folder.Subfolders.OrderBy(sf => sf.Name).ToList();
+            }
             Folders.Clear();
             foreach (var folder in sortedFolders)
             {
