@@ -23,15 +23,15 @@ namespace FolderCreator.ViewModels
             {
                 var sampleTemplate = new Template
                 {
-                    Name = "Sample Template",
-                    Folders = new List<TemplateFolder>
-                    {
-                        new TemplateFolder("Folder1"),
-                        new TemplateFolder("Folder2/Subfolder1"),
-                        new TemplateFolder("Folder3/Subfolder2/Subsubfolder1")
-                    }
+                    Name = "Sample Template"
                 };
+
+                sampleTemplate.AddFolder("Project/{{ProjectName}}/src");
+                sampleTemplate.AddFolder("Project/{{ProjectName}}/docs");
+                sampleTemplate.AddFolder("Project/{{ProjectName}}/tests");
+
                 Templates.Add(sampleTemplate);
+                TemplateManager.SaveTemplate(sampleTemplate);
             }
         }
 

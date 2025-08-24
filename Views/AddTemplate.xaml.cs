@@ -1,5 +1,4 @@
 ﻿using FolderCreator.Models;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,12 +6,12 @@ namespace FolderCreator.Views
 {
     public partial class AddTemplate : Window
     {
-        public ObservableCollection<TemplateFolder> Folders { get; set; }
+        public Template CurrentTemplate { get; set; }
 
         public AddTemplate()
         {
             InitializeComponent();
-            Folders = [];
+            CurrentTemplate = new Template();
             DataContext = this;
         }
 
@@ -22,7 +21,7 @@ namespace FolderCreator.Views
 
             if (!string.IsNullOrEmpty(path))
             {
-                Folders.Add(new TemplateFolder(path));
+                CurrentTemplate.AddFolder(path);
                 NewFolderTextBox.Clear();
                 SortFolders();
             }
@@ -43,7 +42,7 @@ namespace FolderCreator.Views
         {
             if (sender is Button button && button.Tag is TemplateFolder folder)
             {
-                Folders.Remove(folder);
+                CurrentTemplate.Folders.Remove(folder);
             }
         }
 
@@ -60,15 +59,15 @@ namespace FolderCreator.Views
 
         private void SortFolders()
         {
-            var sortedFolders = Folders.OrderBy(f => f.Name).ToList();
+            var sortedFolders = CurrentTemplate.Folders.OrderBy(f => f.Name).ToList();
             foreach (var folder in sortedFolders)
             {
                 folder.Subfolders = folder.Subfolders.OrderBy(sf => sf.Name).ToList();
             }
-            Folders.Clear();
+            CurrentTemplate.Folders.Clear();
             foreach (var folder in sortedFolders)
             {
-                Folders.Add(folder);
+                CurrentTemplate.Folders.Add(folder);
             }
         }
     }
