@@ -29,29 +29,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="TreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="True"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
     </Window.Resources>
     
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Template Name Input -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="0">
+            <Label Content="Nazwa szablonu:"/>
+            <TextBox x:Name="TemplateNameTextBox" Width="200" Text="{Binding CurrentTemplate.Name, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
         <!-- Folder Path Input -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
             <Label Content="Ścieżka nowego folderu:"/>
             <TextBox x:Name="NewFolderTextBox" Width="200"/>
             <Button Content="Dodaj do szablonu" Margin="5,0,0,0" Click="AddButton_Click"/>
         </StackPanel>
 
         <!-- List of Folder Paths -->
-        <TreeView ItemsSource="{Binding CurrentTemplate.Folders}" FontSize="14" Grid.Row="1" Margin="0,5,0,0">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="True"/>
-                </Style>
-            </TreeView.ItemContainerStyle>
+        <TreeView ItemsSource="{Binding CurrentTemplate.Folders}" FontSize="14" Grid.Row="2" Margin="0,5,0,0" ItemContainerStyle="{StaticResource TreeViewItemStyle}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Subfolders}">
                     <StackPanel Orientation="Horizontal" Margin="5">
@@ -63,7 +71,7 @@
         </TreeView>
 
         <!-- Action Buttons -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Zapisz szablon" Margin="0,0,5,0" Click="SaveTemplateButton_Click"/>
             <Button Content="Anuluj" Click="CancelButton_Click"/>
         </StackPanel>

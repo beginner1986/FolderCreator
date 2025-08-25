@@ -48,8 +48,10 @@ namespace FolderCreator.Views
 
         private void SaveTemplateButton_Click(object sender, RoutedEventArgs e)
         {
-            // Save template logic here
             SortFolders();
+
+            TemplateManager.SaveTemplate(CurrentTemplate);
+            this.Close();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -62,7 +64,7 @@ namespace FolderCreator.Views
             var sortedFolders = CurrentTemplate.Folders.OrderBy(f => f.Name).ToList();
             foreach (var folder in sortedFolders)
             {
-                folder.Subfolders = folder.Subfolders.OrderBy(sf => sf.Name).ToList();
+                folder.Subfolders = new System.Collections.ObjectModel.ObservableCollection<TemplateFolder>(folder.Subfolders.OrderBy(sf => sf.Name));
             }
             CurrentTemplate.Folders.Clear();
             foreach (var folder in sortedFolders)

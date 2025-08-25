@@ -1,19 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace FolderCreator.Models
 {
-    public class TemplateFolder
+    public class TemplateFolder : INotifyPropertyChanged
     {
-        public string Name { get; set; } = string.Empty;
-        public List<TemplateFolder> Subfolders { get; set; } = [];
+        private string _name = string.Empty;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
+        public ObservableCollection<TemplateFolder> Subfolders { get; set; } = [];
 
         public void AddSubfolder(string path)
         {
             var parts = path.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (!Subfolders.Any(f => f.Name == parts[0]))
+            {
                 Subfolders.Add(new TemplateFolder { Name = parts[0] });
+            }
 
             if (parts.Length > 1)
             {
@@ -21,6 +36,13 @@ namespace FolderCreator.Models
                 var subFolder = Subfolders.First(f => f.Name == parts[0]);
                 subFolder.AddSubfolder(subPath);
             }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
