@@ -83,7 +83,7 @@
         />
 
         <!-- row 3 -->
-        <TreeView ItemsSource="{Binding Templates}" FontSize="14"
+        <TreeView x:Name="TemplatesTreeView" ItemsSource="{Binding Templates}" FontSize="14"
           Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,5,0,0">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}">
@@ -142,6 +142,8 @@
             </StackPanel>
         </Button>
         <Button
+            Command="{Binding DeleteTemplateCommand}"
+            CommandParameter="{Binding ElementName=TemplatesTreeView, Path=SelectedItem}"
             Grid.Row="4"
             Grid.Column="2"
             Margin="5,5,0,0"

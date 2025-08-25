@@ -11,27 +11,43 @@ namespace FolderCreator.ViewModels
         public ObservableCollection<Template> Templates { get; set; }
 
         public ICommand AddTemplateCommand { get; set; }
+        public ICommand DeleteTemplateCommand { get; set; }
 
         public MainViewModel()
         {
             Templates = TemplateManager.GetAllTemplates();
 
             AddTemplateCommand = new RelayCommand(ShowWindow, CanShowWindow);
+            DeleteTemplateCommand = new RelayCommand(DeleteTemplate, CanDeleteTemplate);
 
             // For testing purposes, add a sample template if none exist
             if (Templates.Count == 0)
             {
                 var sampleTemplate = new Template
                 {
-                    Name = "Sample Template"
+                    Name = "Pierwszy Szablon"
                 };
 
-                sampleTemplate.AddFolder("Project/{{ProjectName}}/src");
-                sampleTemplate.AddFolder("Project/{{ProjectName}}/docs");
-                sampleTemplate.AddFolder("Project/{{ProjectName}}/tests");
+                sampleTemplate.AddFolder("Projekt/{{Nazwa}}/src");
+                sampleTemplate.AddFolder("Projekt/{{Nazwa}}/docs");
+                sampleTemplate.AddFolder("Projekt/{{Nazwa}}/tests");
 
                 Templates.Add(sampleTemplate);
                 TemplateManager.SaveTemplate(sampleTemplate);
+            }
+        }
+
+        private bool CanDeleteTemplate(object? obj)
+        {
+            return obj is Template;
+        }
+
+        private void DeleteTemplate(object? obj)
+        {
+            if (obj is Template template)
+            {
+                TemplateManager.DeleteTemplate(template.Name);
+                Templates.Remove(template);
             }
         }
 

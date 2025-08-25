@@ -7,7 +7,7 @@ namespace FolderCreator.Models
 {
     public class Template : INotifyPropertyChanged
     {
-        private string _name = "New Template";
+        private string _name = "Nowy Szablon";
         public string Name
         {
             get => _name;

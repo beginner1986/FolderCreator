@@ -36,6 +36,15 @@ namespace FolderCreator.Models
             return JsonSerializer.Deserialize<Template>(json);
         }
 
+        public static void DeleteTemplate(string templateName)
+        {
+            string filePath = Path.Combine(TemplatesDirectory, $"{templateName}.json");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
         public static ObservableCollection<Template> GetAllTemplates()
         {
             var templates = new ObservableCollection<Template>();
@@ -54,17 +63,6 @@ namespace FolderCreator.Models
                 }
             }
             return templates;
-        }
-
-        public static IEnumerable<string?> GetTemplateNames()
-        {
-            if (!Directory.Exists(TemplatesDirectory))
-            {
-                return Enumerable.Empty<string>();
-            }
-
-            return Directory.GetFiles(TemplatesDirectory, "*.json")
-                            .Select(Path.GetFileNameWithoutExtension);
         }
     }
 }
