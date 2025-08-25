@@ -1,4 +1,5 @@
 ﻿using FolderCreator.Models;
+using FolderCreator.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -46,11 +47,46 @@ namespace FolderCreator.Views
             }
         }
 
-        private void SaveTemplateButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveTemplateButton_Click(object sender, RoutedEventArgs e)
         {
             SortFolders();
 
-            TemplateManager.SaveTemplate(CurrentTemplate);
+            // Get the MainViewModel instance
+            if (Application.Current.MainWindow?.DataContext is MainViewModel mainViewModel)
+            {
+                // Check if the template already exists in the collection
+                var existingTemplate = mainViewModel.Templates.FirstOrDefault(t => t.Name == CurrentTemplate.Name);
+
+                if (existingTemplate != null)
+                {
+                    // Ask the user if they want to replace the existing template
+                    MessageBoxResult result = MessageBox.Show($"Szablon o nazwie '{CurrentTemplate.Name}' już istnieje. Czy chcesz go zastąpić?", "Zastąpić istniejący szablon?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // If the user chooses to replace, update the template
+                        TemplateManager.SaveTemplate(CurrentTemplate);
+
+                        // Replace the existing template in the collection
+                        int index = mainViewModel.Templates.IndexOf(existingTemplate);
+                        mainViewModel.Templates[index] = CurrentTemplate;
+                    }
+                    else
+                    {
+                        // If the user chooses to cancel, do nothing
+                        return;
+                    }
+                }
+                else
+                {
+                    // If the template doesn't exist, save it
+                    TemplateManager.SaveTemplate(CurrentTemplate);
+
+                    // Add the new template to the collection
+                    mainViewModel.Templates.Add(CurrentTemplate);
+                }
+            }
+
             this.Close();
         }
 
