@@ -29,12 +29,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style x:Key="TreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
-            <Setter Property="IsExpanded" Value="True"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        </Style>
     </Window.Resources>
     
     <Grid Margin="10">
@@ -59,7 +53,14 @@
         </StackPanel>
 
         <!-- List of Folder Paths -->
-        <TreeView ItemsSource="{Binding CurrentTemplate.Folders}" FontSize="14" Grid.Row="2" Margin="0,5,0,0" ItemContainerStyle="{StaticResource TreeViewItemStyle}">
+        <TreeView ItemsSource="{Binding CurrentTemplate.Folders}" FontSize="14" Grid.Row="2" Margin="0,5,0,0">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Subfolders}">
                     <StackPanel Orientation="Horizontal" Margin="5">
