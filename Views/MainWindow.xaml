@@ -127,6 +127,8 @@
             </StackPanel>
         </Button>
         <Button
+            Command="{Binding EditTemplateCommand}"
+            CommandParameter="{Binding SelectedItem, ElementName=TemplatesTreeView}"
             Grid.Row="4"
             Grid.Column="1"
             Margin="5,5,5,0"

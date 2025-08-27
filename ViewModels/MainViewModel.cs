@@ -12,6 +12,7 @@ namespace FolderCreator.ViewModels
 
         public ICommand AddTemplateCommand { get; set; }
         public ICommand DeleteTemplateCommand { get; set; }
+        public ICommand EditTemplateCommand { get; set; }
 
         public MainViewModel()
         {
@@ -19,6 +20,7 @@ namespace FolderCreator.ViewModels
 
             AddTemplateCommand = new RelayCommand(ShowWindow, CanShowWindow);
             DeleteTemplateCommand = new RelayCommand(DeleteTemplate, CanDeleteTemplate);
+            EditTemplateCommand = new RelayCommand(EditTemplate, CanEditTemplate);
 
             // For testing purposes, add a sample template if none exist
             if (Templates.Count == 0)
@@ -58,9 +60,23 @@ namespace FolderCreator.ViewModels
 
         private void ShowWindow(object? obj)
         {
-            AddTemplate addTemplate = new AddTemplate();
+            AddTemplate addTemplate = new();
 
             addTemplate.ShowDialog();
+        }
+
+        private bool CanEditTemplate(object? obj)
+        {
+            return obj is Template;
+        }
+
+        private void EditTemplate(object? obj)
+        {
+            if (obj is Template template)
+            {
+                AddTemplate addTemplate = new(template);
+                addTemplate.ShowDialog();
+            }
         }
     }
 }

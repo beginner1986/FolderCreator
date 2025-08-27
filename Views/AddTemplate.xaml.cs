@@ -11,10 +11,14 @@ namespace FolderCreator.Views
         public Template CurrentTemplate { get; set; }
         private TemplateFolder? CurrentlyEditing { get; set; }
 
-        public AddTemplate()
+        public AddTemplate() : this(null)
+        {
+        }
+
+        public AddTemplate(Template? template)
         {
             InitializeComponent();
-            CurrentTemplate = new Template();
+            CurrentTemplate = template ?? new Template();
             DataContext = this;
         }
 
@@ -32,12 +36,9 @@ namespace FolderCreator.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            // Handle edit logic here
-            if (sender is Button button && button.Tag is string folder)
+            if (sender is Button button && button.Tag is TemplateFolder folder)
             {
-                // You can implement edit functionality here, such as opening a dialog to edit the folder's properties
-                MessageBox.Show($"Editing {folder}");
-                SortFolders();
+                StartEditing(folder);
             }
         }
 
@@ -49,7 +50,7 @@ namespace FolderCreator.Views
             }
         }
 
-        private async void SaveTemplateButton_Click(object sender, RoutedEventArgs e)
+        private void SaveTemplateButton_Click(object sender, RoutedEventArgs e)
         {
             SortFolders();
 
@@ -62,7 +63,7 @@ namespace FolderCreator.Views
                 if (existingTemplate != null)
                 {
                     // Ask the user if they want to replace the existing template
-                    MessageBoxResult result = MessageBox.Show($"Szablon o nazwie '{CurrentTemplate.Name}' już istnieje. Czy chcesz go zastąpić?", "Zastąpić istniejący szablon?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult result = MessageBox.Show($"Template with the name '{CurrentTemplate.Name}' already exists. Do you want to replace it?", "Replace existing template?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                     if (result == MessageBoxResult.Yes)
                     {
@@ -130,7 +131,7 @@ namespace FolderCreator.Views
         }
 
         // Helper method to find the parent of a subfolder
-        private TemplateFolder? FindParentFolder(System.Collections.ObjectModel.ObservableCollection<TemplateFolder> folders, TemplateFolder target)
+        private static TemplateFolder? FindParentFolder(System.Collections.ObjectModel.ObservableCollection<TemplateFolder> folders, TemplateFolder target)
         {
             foreach (var folder in folders)
             {
@@ -179,21 +180,21 @@ namespace FolderCreator.Views
             }
         }
 
-        private void StartEditing(TemplateFolder subfolder)
+        private void StartEditing(TemplateFolder folder)
         {
             if (CurrentlyEditing != null)
             {
                 CurrentlyEditing.IsEditing = false;
             }
-            CurrentlyEditing = subfolder;
+            CurrentlyEditing = folder;
             CurrentlyEditing.IsEditing = true;
         }
 
-        private void StopEditing(TemplateFolder subfolder)
+        private void StopEditing(TemplateFolder folder)
         {
-            if (CurrentlyEditing == subfolder)
+            if (CurrentlyEditing == folder)
             {
-                subfolder.IsEditing = false;
+                folder.IsEditing = false;
                 CurrentlyEditing = null;
             }
         }

@@ -39,7 +39,7 @@ namespace FolderCreator.Models
 
         public void AddSubfolder(string path)
         {
-            var parts = path.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            var parts = path.Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries);
 
             if (!Subfolders.Any(f => f.Name == parts[0]))
             {

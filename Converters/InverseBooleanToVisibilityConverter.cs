@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace FolderCreator.Views
+namespace FolderCreator.Converters
 {
     public class InverseBooleanToVisibilityConverter : IValueConverter
     {
@@ -20,7 +20,7 @@ namespace FolderCreator.Views
         {
             if (value is Visibility v)
             {
-                return v == Visibility.Visible ? false : true;
+                return v != Visibility.Visible;
             }
             return false;
         }

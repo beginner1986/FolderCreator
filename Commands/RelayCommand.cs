@@ -2,18 +2,12 @@
 
 namespace FolderCreator.Commands
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null) : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
-        private Action<object?> _execute;
-        private Predicate<object?>? _canExecute;
-
-        public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
+        private readonly Action<object?> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        private readonly Predicate<object?>? _canExecute = canExecute;
 
         public bool CanExecute(object? parameter)
         {
@@ -23,6 +17,11 @@ namespace FolderCreator.Commands
         public void Execute(object? parameter)
         {
             _execute(parameter);
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
