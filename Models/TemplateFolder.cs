@@ -14,7 +14,7 @@ namespace FolderCreator.Models
             get => _name;
             set
             {
-                if (_name != value)
+                if (_name != value && value != String.Empty)
                 {
                     _name = value;
                     OnPropertyChanged(nameof(Name));
