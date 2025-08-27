@@ -45,14 +45,35 @@
         <!-- Template Name Input -->
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="0">
             <Label Content="Nazwa szablonu:"/>
-            <TextBox x:Name="TemplateNameTextBox" Width="200" Text="{Binding CurrentTemplate.Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox
+                x:Name="TemplateNameTextBox"
+                Width="200" 
+                Text="{Binding CurrentTemplate.Name, UpdateSourceTrigger=PropertyChanged}"
+                VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <!-- Folder Path Input -->
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
             <Label Content="Ścieżka nowego folderu:"/>
             <TextBox x:Name="NewFolderTextBox" Width="200"/>
-            <Button Content="Dodaj do szablonu" Margin="5,0,0,0" Click="AddButton_Click"/>
+            <Button 
+                Margin="5,0,0,0" 
+                Click="AddButton_Click"
+                HorizontalAlignment="Center" 
+                FontSize="14"
+                VerticalAlignment="Center"
+            >
+                <StackPanel Orientation="Horizontal">
+                    <materialIcons:MaterialIcon Kind="Add" Margin="0,0,10,0"/>
+                    <TextBlock 
+                        Text="Dodaj folder" 
+                        HorizontalAlignment="Center" 
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0"
+                    />
+                </StackPanel>
+        </Button>
         </StackPanel>
 
         <!-- List of Folder Paths -->
@@ -100,8 +121,43 @@
 
         <!-- Action Buttons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Zapisz szablon" Margin="0,0,5,0" Click="SaveTemplateButton_Click"/>
-            <Button Content="Anuluj" Click="CancelButton_Click"/>
+            <Button 
+                Margin="0,5,10,0" 
+                Click="SaveTemplateButton_Click"
+                HorizontalAlignment="Center" 
+                FontSize="14"
+                VerticalAlignment="Center"
+            >
+                <StackPanel Orientation="Horizontal">
+                    <materialIcons:MaterialIcon Kind="FloppyDisk" Margin="0,0,10,0"/>
+                    <TextBlock 
+                        Text="Zapisz szablon" 
+                        HorizontalAlignment="Center" 
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0"
+                    />
+                </StackPanel>
+            </Button>
+            <Button 
+                Margin="0,5,0,0" 
+                Click="CancelButton_Click"
+                HorizontalAlignment="Center" 
+                FontSize="14"
+                VerticalAlignment="Center"
+            >
+                <StackPanel Orientation="Horizontal">
+                    <materialIcons:MaterialIcon Kind="Cancel" Margin="0,0,10,0"/>
+                    <TextBlock 
+                        Text="Anuluj" 
+                        HorizontalAlignment="Center" 
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0"
+                        
+                    />
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
