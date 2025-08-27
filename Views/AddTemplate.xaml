@@ -68,7 +68,7 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Subfolders}">
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <materialIcons:MaterialIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <materialIcons:MaterialIcon Kind="Folder" VerticalAlignment="Center" Margin="0,0,10,0" />
                         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"
                                  VerticalAlignment="Center"
