@@ -2,12 +2,14 @@
 using FolderCreator.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace FolderCreator.Views
 {
     public partial class AddTemplate : Window
     {
         public Template CurrentTemplate { get; set; }
+        private TemplateFolder? CurrentlyEditing { get; set; }
 
         public AddTemplate()
         {
@@ -139,6 +141,61 @@ namespace FolderCreator.Views
                     return parent;
             }
             return null;
+        }
+
+        private void EditSubfolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is TemplateFolder subfolder)
+            {
+                StartEditing(subfolder);
+            }
+        }
+
+        private void TreeViewItem_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TreeViewItem item && item.Header is TemplateFolder subfolder)
+            {
+                StartEditing(subfolder);
+                e.Handled = true; // Prevent further processing of the double-click
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox && textBox.DataContext is TemplateFolder subfolder)
+            {
+                StopEditing(subfolder);
+            }
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (sender is TextBox textBox && textBox.DataContext is TemplateFolder subfolder)
+                {
+                    StopEditing(subfolder);
+                }
+            }
+        }
+
+        private void StartEditing(TemplateFolder subfolder)
+        {
+            if (CurrentlyEditing != null)
+            {
+                CurrentlyEditing.IsEditing = false;
+            }
+            CurrentlyEditing = subfolder;
+            CurrentlyEditing.IsEditing = true;
+        }
+
+        private void StopEditing(TemplateFolder subfolder)
+        {
+            if (CurrentlyEditing == subfolder)
+            {
+                subfolder.IsEditing = false;
+                CurrentlyEditing = null;
+            }
         }
     }
 }

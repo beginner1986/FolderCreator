@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         Title="Nowy szablon" Height="450" Width="800">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
         <Style x:Key="IconButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -59,18 +61,35 @@
                     <Setter Property="IsExpanded" Value="True"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="TreeViewItem_PreviewMouseDoubleClick"/>
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Subfolders}">
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <materialIcons:MaterialIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                 VerticalAlignment="Center"
+                                 MinWidth="100"
+                                 LostFocus="TextBox_LostFocus"
+                                 KeyDown="TextBox_KeyDown"/>
+                        <TextBlock Text="{Binding Name}"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                   VerticalAlignment="Center" />
+                        <Button Click="EditSubfolderButton_Click"
+                                Tag="{Binding}"
+                                Style="{StaticResource IconButtonStyle}"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center">
+                            <materialIcons:MaterialIcon Kind="PencilOutline" Width="20" Height="20" />
+                        </Button>
                         <Button Click="RemoveSubfolderButton_Click"
                                 Tag="{Binding}" 
-                                VerticalAlignment="Center"
+                                Style="{StaticResource IconButtonStyle}"
                                 Foreground="Red"
-                                Margin="10,0,0,0">
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center">
                             <materialIcons:MaterialIcon Kind="TrashCanOutline" Width="20" Height="20" />
                         </Button>
                     </StackPanel>

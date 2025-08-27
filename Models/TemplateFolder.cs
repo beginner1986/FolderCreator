@@ -7,6 +7,8 @@ namespace FolderCreator.Models
     public class TemplateFolder : INotifyPropertyChanged
     {
         private string _name = string.Empty;
+        private bool _isEditing;
+
         public string Name
         {
             get => _name;
@@ -19,6 +21,20 @@ namespace FolderCreator.Models
                 }
             }
         }
+
+        public bool IsEditing
+        {
+            get => _isEditing;
+            set
+            {
+                if (_isEditing != value)
+                {
+                    _isEditing = value;
+                    OnPropertyChanged(nameof(IsEditing));
+                }
+            }
+        }
+
         public ObservableCollection<TemplateFolder> Subfolders { get; set; } = [];
 
         public void AddSubfolder(string path)
