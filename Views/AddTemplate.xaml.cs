@@ -108,5 +108,37 @@ namespace FolderCreator.Views
                 CurrentTemplate.Folders.Add(folder);
             }
         }
+
+        private void RemoveSubfolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is TemplateFolder subfolder)
+            {
+                // Find parent folder
+                TemplateFolder? parent = FindParentFolder(CurrentTemplate.Folders, subfolder);
+                if (parent != null)
+                {
+                    parent.Subfolders.Remove(subfolder);
+                }
+                else
+                {
+                    // If not found in subfolders, try top-level folders
+                    CurrentTemplate.Folders.Remove(subfolder);
+                }
+            }
+        }
+
+        // Helper method to find the parent of a subfolder
+        private TemplateFolder? FindParentFolder(System.Collections.ObjectModel.ObservableCollection<TemplateFolder> folders, TemplateFolder target)
+        {
+            foreach (var folder in folders)
+            {
+                if (folder.Subfolders.Contains(target))
+                    return folder;
+                var parent = FindParentFolder(folder.Subfolders, target);
+                if (parent != null)
+                    return parent;
+            }
+            return null;
+        }
     }
 }

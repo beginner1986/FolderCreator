@@ -66,6 +66,13 @@
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <materialIcons:MaterialIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,10,0" />
                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                        <Button Click="RemoveSubfolderButton_Click"
+                                Tag="{Binding}" 
+                                VerticalAlignment="Center"
+                                Foreground="Red"
+                                Margin="10,0,0,0">
+                            <materialIcons:MaterialIcon Kind="TrashCanOutline" Width="20" Height="20" />
+                        </Button>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
