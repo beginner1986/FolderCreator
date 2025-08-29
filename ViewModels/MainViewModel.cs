@@ -78,6 +78,7 @@ namespace FolderCreator.ViewModels
                 {
                     TemplateManager.DeleteTemplate(template.Name);
                     Templates.Remove(template);
+                    FilterTemplates();
                 }
             }
         }
