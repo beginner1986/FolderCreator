@@ -47,6 +47,8 @@
 
         <!-- row 1 -->
         <Button 
+            Command="{Binding UseTemplateCommand}"
+            CommandParameter="{Binding SelectedItem, ElementName=TemplatesTreeView}"
             Grid.Row="1"
             Grid.Column="0"
             Margin="0,0,5,5"

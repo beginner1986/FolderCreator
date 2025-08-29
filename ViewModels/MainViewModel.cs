@@ -1,6 +1,7 @@
 ﻿using FolderCreator.Commands;
 using FolderCreator.Models;
 using FolderCreator.Views;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -13,6 +14,7 @@ namespace FolderCreator.ViewModels
         public ICommand AddTemplateCommand { get; set; }
         public ICommand DeleteTemplateCommand { get; set; }
         public ICommand EditTemplateCommand { get; set; }
+        public ICommand UseTemplateCommand { get; set; }
 
         public MainViewModel()
         {
@@ -21,6 +23,7 @@ namespace FolderCreator.ViewModels
             AddTemplateCommand = new RelayCommand(ShowWindow, CanShowWindow);
             DeleteTemplateCommand = new RelayCommand(DeleteTemplate, CanDeleteTemplate);
             EditTemplateCommand = new RelayCommand(EditTemplate, CanEditTemplate);
+            UseTemplateCommand = new RelayCommand(UseTemplate, CanUseTemplate);
 
             // For testing purposes, add a sample template if none exist
             if (Templates.Count == 0)
@@ -76,6 +79,47 @@ namespace FolderCreator.ViewModels
             {
                 AddTemplate addTemplate = new(template);
                 addTemplate.ShowDialog();
+            }
+        }
+
+        private bool CanUseTemplate(object? obj)
+        {
+            return obj is Template;
+        }
+
+        private void UseTemplate(object? obj)
+        {
+            if (obj is Template template)
+            {
+                var folderDialog = new OpenFolderDialog
+                {
+                    // Set options here
+                };
+
+                if (folderDialog.ShowDialog() == true)
+                {
+                    var folderName = folderDialog.FolderName;
+                    // Do something with the result
+                }
+            }
+        }
+
+        private void CreateFoldersFromTemplate(Template template, string rootPath)
+        {
+            foreach (var folder in template.Folders)
+            {
+                CreateFolder(folder, rootPath);
+            }
+        }
+
+        private void CreateFolder(TemplateFolder folder, string parentPath)
+        {
+            string folderPath = System.IO.Path.Combine(parentPath, folder.Name);
+            System.IO.Directory.CreateDirectory(folderPath);
+
+            foreach (var subfolder in folder.Subfolders)
+            {
+                CreateFolder(subfolder, folderPath);
             }
         }
     }
