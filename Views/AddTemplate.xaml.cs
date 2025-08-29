@@ -11,15 +11,28 @@ namespace FolderCreator.Views
         public Template CurrentTemplate { get; set; }
         private TemplateFolder? CurrentlyEditing { get; set; }
 
-        public AddTemplate() : this(null)
+        public AddTemplate() : this(null, true)
         {
         }
 
-        public AddTemplate(Template? template)
+        public AddTemplate(Template? template) : this(template, false)
+        {
+        }
+
+        public AddTemplate(Template? template, bool isNew)
         {
             InitializeComponent();
             CurrentTemplate = template ?? new Template();
             DataContext = this;
+
+            if (isNew)
+            {
+                Title = "Nowy szablon";
+            }
+            else
+            {
+                Title = "Edytuj szablon";
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
