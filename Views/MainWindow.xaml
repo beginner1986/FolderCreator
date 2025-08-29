@@ -45,8 +45,9 @@
             HorizontalAlignment="Right"
             Background="White"
             Margin="5,5,5,5"
+            Command="{Binding ShowInfoCommand}"
         >
-            <materialIcons:MaterialIcon Kind="Cog"/>
+            <materialIcons:MaterialIcon Kind="Info" Foreground="Blue" FontSize="14"/>
         </Button>
 
         <!-- row 1 -->

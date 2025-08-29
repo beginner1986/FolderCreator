@@ -52,6 +52,7 @@ namespace FolderCreator.ViewModels
         public ICommand DeleteTemplateCommand { get; set; }
         public ICommand EditTemplateCommand { get; set; }
         public ICommand UseTemplateCommand { get; set; }
+        public ICommand ShowInfoCommand { get; set; }
 
         public MainViewModel()
         {
@@ -62,6 +63,7 @@ namespace FolderCreator.ViewModels
             DeleteTemplateCommand = new RelayCommand(DeleteTemplate, CanDeleteTemplate);
             EditTemplateCommand = new RelayCommand(EditTemplate, CanEditTemplate);
             UseTemplateCommand = new RelayCommand(UseTemplate, CanUseTemplate);
+            ShowInfoCommand = new RelayCommand(ShowInfo, CanShowInfo);
         }
 
         private bool CanDeleteTemplate(object? obj)
@@ -154,6 +156,16 @@ namespace FolderCreator.ViewModels
                     }
                 }
             }
+        }
+
+        private bool CanShowInfo(object? obj)
+        {
+            return true;
+        }
+
+        private void ShowInfo(object? obj)
+        {
+            MessageBox.Show("Autor: Adam Emieljaniuk\nEmail: beginner1986@gmail.com\n(C)2025", "O aplikacji", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void FilterTemplates()
