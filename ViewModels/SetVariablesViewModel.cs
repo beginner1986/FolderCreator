@@ -5,7 +5,7 @@ namespace FolderCreator.ViewModels
 {
     public class SetVariablesViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<VariableViewModel> _variables;
+        private ObservableCollection<VariableViewModel> _variables = [];
 
         public ObservableCollection<VariableViewModel> Variables
         {
@@ -34,7 +34,7 @@ namespace FolderCreator.ViewModels
 
     public class VariableViewModel : INotifyPropertyChanged
     {
-        private string _key;
+        private string _key = string.Empty;
         private string _value = string.Empty;
 
         public string Key

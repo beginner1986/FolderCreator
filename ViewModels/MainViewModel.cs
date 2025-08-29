@@ -37,7 +37,7 @@ namespace FolderCreator.ViewModels
             }
         }
 
-        private ObservableCollection<Template> _filteredTemplates;
+        private ObservableCollection<Template> _filteredTemplates = [];
         public ObservableCollection<Template> FilteredTemplates
         {
             get => _filteredTemplates;
