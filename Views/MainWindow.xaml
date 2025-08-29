@@ -79,7 +79,7 @@
 
         <!-- row 2 -->
         <Line
-            X1="0" Y1="2" X2="500" Y2="2" 
+            X1="0" Y1="2" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}" Y2="2" 
             Stroke="DarkGray" 
             StrokeThickness="1"
             Grid.Row="2"
