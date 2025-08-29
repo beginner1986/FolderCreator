@@ -8,6 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="500"
         ResizeMode="NoResize">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding AddTemplateCommand}" Key="N" Modifiers="Control" />
+        <KeyBinding Command="{Binding EditTemplateCommand}" Key="E" Modifiers="Control" CommandParameter="{Binding SelectedItem, ElementName=TemplatesTreeView}" />
+    </Window.InputBindings>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -85,8 +89,15 @@
         />
 
         <!-- row 3 -->
-        <TreeView x:Name="TemplatesTreeView" ItemsSource="{Binding Templates}" FontSize="14"
-          Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,5,0,0">
+        <TreeView 
+            x:Name="TemplatesTreeView" 
+            ItemsSource="{Binding Templates}" 
+            FontSize="14"
+            Grid.Row="3" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="3" 
+            Margin="0,5,0,0"
+            KeyDown="TemplatesTreeView_KeyDown">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}">
                     <HierarchicalDataTemplate.ItemContainerStyle>
@@ -121,11 +132,14 @@
             <StackPanel Orientation="Horizontal">
                 <materialIcons:MaterialIcon Kind="FolderPlusOutline" Margin="0,0,10,0"/>
                 <TextBlock 
-                Text="Nowy szablon" 
                 HorizontalAlignment="Center" 
                 FontSize="14"
                 VerticalAlignment="Center"
-            />
+            >
+                    <TextBlock.Inlines>
+                        <Underline>N</Underline>owy szablon
+                    </TextBlock.Inlines>
+                </TextBlock>
             </StackPanel>
         </Button>
         <Button
@@ -138,11 +152,14 @@
             <StackPanel Orientation="Horizontal">
                 <materialIcons:MaterialIcon Kind="PencilOutline" Margin="0,0,10,0"/>
                 <TextBlock 
-                    Text="Edytuj szablon" 
                     HorizontalAlignment="Center" 
                     FontSize="14"
                     VerticalAlignment="Center"
-                />
+                >
+                    <TextBlock.Inlines>
+                        <Underline>E</Underline>dytuj szablon
+                    </TextBlock.Inlines>
+                </TextBlock>
             </StackPanel>
         </Button>
         <Button

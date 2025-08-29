@@ -19,5 +19,24 @@ namespace FolderCreator
         {
             Application.Current.Shutdown();
         }
+
+        private void TemplatesTreeView_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                if (DataContext is MainViewModel mainViewModel && mainViewModel.DeleteTemplateCommand.CanExecute(TemplatesTreeView.SelectedItem))
+                {
+                    mainViewModel.DeleteTemplateCommand.Execute(TemplatesTreeView.SelectedItem);
+                }
+            }
+
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                if (DataContext is MainViewModel mainViewModel && mainViewModel.EditTemplateCommand.CanExecute(TemplatesTreeView.SelectedItem))
+                {
+                    mainViewModel.EditTemplateCommand.Execute(TemplatesTreeView.SelectedItem);
+                }
+            }
+        }
     }
 }
