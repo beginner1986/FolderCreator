@@ -125,6 +125,7 @@ namespace FolderCreator.ViewModels
                     if (isSuccess)
                     {
                         MessageBox.Show("Foldery zostały pomyślnie utworzone.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Diagnostics.Process.Start("explorer.exe", folderName);
                     }
                     else
                     {
