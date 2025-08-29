@@ -86,6 +86,9 @@ namespace FolderCreator.Views
                         // Replace the existing template in the collection
                         int index = mainViewModel.Templates.IndexOf(existingTemplate);
                         mainViewModel.Templates[index] = CurrentTemplate;
+
+                        // Update FilteredTemplates as well
+                        mainViewModel.FilteredTemplates = new System.Collections.ObjectModel.ObservableCollection<Template>(mainViewModel.Templates);
                     }
                     else
                     {
@@ -100,6 +103,9 @@ namespace FolderCreator.Views
 
                     // Add the new template to the collection
                     mainViewModel.Templates.Add(CurrentTemplate);
+
+                    // Update FilteredTemplates as well
+                    mainViewModel.FilteredTemplates = new System.Collections.ObjectModel.ObservableCollection<Template>(mainViewModel.Templates);
                 }
             }
 

@@ -69,7 +69,7 @@
         </Button>
         
         <TextBox 
-            Text="Szukaj szablonu..." 
+            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
             FontSize="14"
             Grid.Row="1"
             Grid.Column="1"
@@ -91,7 +91,7 @@
         <!-- row 3 -->
         <TreeView 
             x:Name="TemplatesTreeView" 
-            ItemsSource="{Binding Templates}" 
+            ItemsSource="{Binding FilteredTemplates}" 
             FontSize="14"
             Grid.Row="3" 
             Grid.Column="0" 
@@ -128,7 +128,7 @@
             Grid.Row="4"
             Grid.Column="0"
             Margin="0,5,5,0"
-    >
+>
             <StackPanel Orientation="Horizontal">
                 <materialIcons:MaterialIcon Kind="FolderPlusOutline" Margin="0,0,10,0"/>
                 <TextBlock 

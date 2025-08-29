@@ -3,14 +3,51 @@ using FolderCreator.Models;
 using FolderCreator.Views;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace FolderCreator.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Template> Templates { get; set; }
+        private string _searchText = string.Empty;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged(nameof(SearchText));
+                    FilterTemplates();
+                }
+            }
+        }
+
+        private ObservableCollection<Template> _templates;
+        public ObservableCollection<Template> Templates
+        {
+            get => _templates;
+            set
+            {
+                _templates = value;
+                OnPropertyChanged(nameof(Templates));
+            }
+        }
+
+        private ObservableCollection<Template> _filteredTemplates;
+        public ObservableCollection<Template> FilteredTemplates
+        {
+            get => _filteredTemplates;
+            set
+            {
+                _filteredTemplates = value;
+                OnPropertyChanged(nameof(FilteredTemplates));
+            }
+        }
 
         public ICommand AddTemplateCommand { get; set; }
         public ICommand DeleteTemplateCommand { get; set; }
@@ -19,7 +56,8 @@ namespace FolderCreator.ViewModels
 
         public MainViewModel()
         {
-            Templates = TemplateManager.GetAllTemplates();
+            _templates = TemplateManager.GetAllTemplates();
+            FilteredTemplates = new ObservableCollection<Template>(_templates);
 
             AddTemplateCommand = new RelayCommand(ShowWindow, CanShowWindow);
             DeleteTemplateCommand = new RelayCommand(DeleteTemplate, CanDeleteTemplate);
@@ -133,6 +171,35 @@ namespace FolderCreator.ViewModels
                     }
                 }
             }
+        }
+
+        private void FilterTemplates()
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                FilteredTemplates = new ObservableCollection<Template>(Templates);
+            }
+            else
+            {
+                FilteredTemplates = new ObservableCollection<Template>(Templates.Where(t => t.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || t.Folders.Any(f => f.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || ContainsTextRecursive(f, SearchText))));
+            }
+        }
+
+        private bool ContainsTextRecursive(TemplateFolder folder, string searchText)
+        {
+            if (folder.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return folder.Subfolders.Any(sf => ContainsTextRecursive(sf, searchText));
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
