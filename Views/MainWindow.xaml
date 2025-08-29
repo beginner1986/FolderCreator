@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:FolderCreator" 
         xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500"
-        ResizeMode="NoResize">
+        Title="MainWindow" Height="450" Width="500">
     <Window.InputBindings>
         <KeyBinding Command="{Binding AddTemplateCommand}" Key="N" Modifiers="Control" />
         <KeyBinding Command="{Binding EditTemplateCommand}" Key="E" Modifiers="Control" CommandParameter="{Binding SelectedItem, ElementName=TemplatesTreeView}" />
