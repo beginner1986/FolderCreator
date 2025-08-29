@@ -100,28 +100,24 @@ namespace FolderCreator.ViewModels
                 if (folderDialog.ShowDialog() == true)
                 {
                     var folderName = folderDialog.FolderName;
-                    
-                    CreateFoldersFromTemplate(template, folderName);
+                    Dictionary<string, string> variables = [];
+
+                    // Show SetVariables window if there are variables
+                    if (template.Variables.Count > 0)
+                    {
+                        SetVariables setVariables = new(template.Variables);
+                        if (setVariables.ShowDialog() == true)
+                        {
+                            variables = setVariables.Variables;                          
+                        }
+                        else
+                        {
+                            return; // User cancelled the operation
+                        }
+                    }
+
+                    TemplateManager.ApplyTemplate(template, folderName, variables);
                 }
-            }
-        }
-
-        private void CreateFoldersFromTemplate(Template template, string rootPath)
-        {
-            foreach (var folder in template.Folders)
-            {
-                CreateFolder(folder, rootPath);
-            }
-        }
-
-        private void CreateFolder(TemplateFolder folder, string parentPath)
-        {
-            string folderPath = System.IO.Path.Combine(parentPath, folder.Name);
-            System.IO.Directory.CreateDirectory(folderPath);
-
-            foreach (var subfolder in folder.Subfolders)
-            {
-                CreateFolder(subfolder, folderPath);
             }
         }
     }

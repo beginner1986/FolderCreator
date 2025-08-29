@@ -25,21 +25,28 @@ namespace FolderCreator.Models
         {
             get
             {
-                var regex = new Regex(@"\{\{(.*?)\}\}");
-                var variables = new HashSet<string>();
-
-                foreach (var folder in Folders)
+                var variableSet = new HashSet<string>();
+                var regex = new Regex(@"\{(\w+)\}");
+                void ExtractVariables(TemplateFolder folder)
                 {
                     var matches = regex.Matches(folder.Name);
                     foreach (Match match in matches)
                     {
-                        variables.Add(match.Groups[1].Value);
+                        variableSet.Add(match.Groups[1].Value);
+                    }
+                    foreach (var subfolder in folder.Subfolders)
+                    {
+                        ExtractVariables(subfolder);
                     }
                 }
-
-                return variables.ToList();
+                foreach (var folder in Folders)
+                {
+                    ExtractVariables(folder);
+                }
+                return variableSet.ToList();
             }
         }
+
         public void AddFolder(string path)
         {
             var parts = path.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);

@@ -65,11 +65,23 @@ namespace FolderCreator.Models
             return templates;
         }
 
-        public static bool ApplyTemplate(Template template, string targetPath)
+        public static bool ApplyTemplate(Template template, string targetPath, Dictionary<string, string> variables)
         {
+            Template processedTemplate = new Template
+            {
+                Name = template.Name,
+                Folders = new ObservableCollection<TemplateFolder>()
+            };
+
+            foreach (var folder in template.Folders)
+            {
+                var processedFolder = folder.CloneWithVariables(variables);
+                processedTemplate.Folders.Add(processedFolder);
+            }
+
             try
             {
-                foreach (var folder in template.Folders)
+                foreach (var folder in processedTemplate.Folders)
                 {
                     CreateFolderRecursively(folder, targetPath);
                 }
@@ -92,6 +104,21 @@ namespace FolderCreator.Models
             {
                 CreateFolderRecursively(subfolder, folderPath);
             }
+        }
+
+        private static TemplateFolder CloneWithVariables(this TemplateFolder folder, Dictionary<string, string> variables)
+        {
+            string newName = folder.Name;
+            foreach (var variable in variables)
+            {
+                newName = newName.Replace($"{{{{{variable.Key}}}}}", variable.Value);
+            }
+            var newFolder = new TemplateFolder { Name = newName };
+            foreach (var subfolder in folder.Subfolders)
+            {
+                newFolder.Subfolders.Add(subfolder.CloneWithVariables(variables));
+            }
+            return newFolder;
         }
     }
 }
