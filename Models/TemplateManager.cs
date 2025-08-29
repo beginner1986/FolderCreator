@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace FolderCreator.Models
 {
@@ -111,7 +112,7 @@ namespace FolderCreator.Models
             string newName = folder.Name;
             foreach (var variable in variables)
             {
-                newName = newName.Replace($"{{{{{variable.Key}}}}}", variable.Value);
+                newName = Regex.Replace(newName, $"{{{{{variable.Key}}}}}", variable.Value);
             }
             var newFolder = new TemplateFolder { Name = newName };
             foreach (var subfolder in folder.Subfolders)
