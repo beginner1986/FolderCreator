@@ -4,7 +4,6 @@ using FolderCreator.Views;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -63,22 +62,6 @@ namespace FolderCreator.ViewModels
             DeleteTemplateCommand = new RelayCommand(DeleteTemplate, CanDeleteTemplate);
             EditTemplateCommand = new RelayCommand(EditTemplate, CanEditTemplate);
             UseTemplateCommand = new RelayCommand(UseTemplate, CanUseTemplate);
-
-            // For testing purposes, add a sample template if none exist
-            if (Templates.Count == 0)
-            {
-                var sampleTemplate = new Template
-                {
-                    Name = "Pierwszy Szablon"
-                };
-
-                sampleTemplate.AddFolder("Projekt/{{Nazwa}}/src");
-                sampleTemplate.AddFolder("Projekt/{{Nazwa}}/docs");
-                sampleTemplate.AddFolder("Projekt/{{Nazwa}}/tests");
-
-                Templates.Add(sampleTemplate);
-                TemplateManager.SaveTemplate(sampleTemplate);
-            }
         }
 
         private bool CanDeleteTemplate(object? obj)
@@ -145,7 +128,6 @@ namespace FolderCreator.ViewModels
                     var folderName = folderDialog.FolderName;
                     Dictionary<string, string> variables = [];
 
-                    // Show SetVariables window if there are variables
                     if (template.Variables.Count > 0)
                     {
                         SetVariables setVariables = new(template.Variables);
@@ -155,7 +137,7 @@ namespace FolderCreator.ViewModels
                         }
                         else
                         {
-                            return; // User cancelled the operation
+                            return;
                         }
                     }
 

@@ -67,44 +67,34 @@ namespace FolderCreator.Views
         {
             SortFolders();
 
-            // Get the MainViewModel instance
             if (Application.Current.MainWindow?.DataContext is MainViewModel mainViewModel)
             {
-                // Check if the template already exists in the collection
                 var existingTemplate = mainViewModel.Templates.FirstOrDefault(t => t.Name == CurrentTemplate.Name);
 
                 if (existingTemplate != null)
                 {
-                    // Ask the user if they want to replace the existing template
                     MessageBoxResult result = MessageBox.Show($"Template with the name '{CurrentTemplate.Name}' already exists. Do you want to replace it?", "Replace existing template?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                     if (result == MessageBoxResult.Yes)
                     {
-                        // If the user chooses to replace, update the template
                         TemplateManager.SaveTemplate(CurrentTemplate);
 
-                        // Replace the existing template in the collection
                         int index = mainViewModel.Templates.IndexOf(existingTemplate);
                         mainViewModel.Templates[index] = CurrentTemplate;
 
-                        // Update FilteredTemplates as well
                         mainViewModel.FilteredTemplates = new System.Collections.ObjectModel.ObservableCollection<Template>(mainViewModel.Templates);
                     }
                     else
                     {
-                        // If the user chooses to cancel, do nothing
                         return;
                     }
                 }
                 else
                 {
-                    // If the template doesn't exist, save it
                     TemplateManager.SaveTemplate(CurrentTemplate);
 
-                    // Add the new template to the collection
                     mainViewModel.Templates.Add(CurrentTemplate);
 
-                    // Update FilteredTemplates as well
                     mainViewModel.FilteredTemplates = new System.Collections.ObjectModel.ObservableCollection<Template>(mainViewModel.Templates);
                 }
             }
@@ -135,7 +125,6 @@ namespace FolderCreator.Views
         {
             if (sender is Button button && button.Tag is TemplateFolder subfolder)
             {
-                // Find parent folder
                 TemplateFolder? parent = FindParentFolder(CurrentTemplate.Folders, subfolder);
                 if (parent != null)
                 {
@@ -143,13 +132,11 @@ namespace FolderCreator.Views
                 }
                 else
                 {
-                    // If not found in subfolders, try top-level folders
                     CurrentTemplate.Folders.Remove(subfolder);
                 }
             }
         }
 
-        // Helper method to find the parent of a subfolder
         private static TemplateFolder? FindParentFolder(System.Collections.ObjectModel.ObservableCollection<TemplateFolder> folders, TemplateFolder target)
         {
             foreach (var folder in folders)
