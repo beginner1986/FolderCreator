@@ -25,6 +25,7 @@
             <RowDefinition Height="4"/>
             <RowDefinition Height="133*" />
             <RowDefinition Height="35" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
          <!-- row 0 -->
@@ -180,5 +181,22 @@
         />
             </StackPanel>
         </Button>
+
+        <!-- row 5 -->
+        <StatusBar 
+            Grid.Row="5" 
+            Grid.Column="0"
+            Grid.ColumnSpan="3" 
+            Margin="0,5,0,0" 
+            Background="White"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <StatusBarItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TextBlock 
+                    Text="beginner1986 (C) 2025" 
+                    FontSize="12"
+                />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
