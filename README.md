@@ -17,6 +17,16 @@ Aplikacja Folderowa to narzêdzie WPF, które umo¿liwia tworzenie struktury folder
 
 *   .NET 8 Runtime
 
+## Instrukcja budowania release z linii poleceñ
+
+Aby zbudowaæ wersjê Release aplikacji z linii poleceñ, wykonaj nastêpuj¹ce kroki:
+1.  Otwórz terminal lub wiersz poleceñ.
+2. PrzejdŸ do katalogu g³ównego projektu, gdzie znajduje siê plik `FolderCreator.csproj`.
+3. Wykonaj nastêpuj¹ce polecenie, aby zbudowaæ projekt w trybie Release i opublikowaæ go do okreœlonego folderu:
+    ```bash
+    dotnet publish -c Release -o ./publish
+    ```
+
 ## Jak u¿ywaæ
 
 1.  Uruchom aplikacjê.
@@ -26,15 +36,7 @@ Aplikacja Folderowa to narzêdzie WPF, które umo¿liwia tworzenie struktury folder
 5.  Opcjonalnie, wprowadŸ wartoœci zmiennych, jeœli szablon ich wymaga.
 6.  Kliknij "OK", aby utworzyæ foldery.
 
-## Instrukcja budowania release z linii poleceñ
-Aby zbudowaæ wersjê Release aplikacji z linii poleceñ, wykonaj nastêpuj¹ce kroki:
-1.  Otwórz terminal lub wiersz poleceñ.
-2. PrzejdŸ do katalogu g³ównego projektu, gdzie znajduje siê plik `FolderCreator.csproj`.
-3. Wykonaj nastêpuj¹ce polecenie, aby zbudowaæ projekt w trybie Release i opublikowaæ go do okreœlonego folderu:
-    ```bash
-    dotnet publish -c Release -o ./publish
-    ```
-1. 
+
 ## Autor
 
 Adam Emieljaniuk
