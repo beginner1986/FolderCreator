@@ -112,7 +112,7 @@ namespace FolderCreator.Models
             string newName = folder.Name;
             foreach (var variable in variables)
             {
-                newName = Regex.Replace(newName, $"{{{{{variable.Key}}}}}", variable.Value);
+                newName = Regex.Replace(newName, Regex.Escape($"{{{{{variable.Key}}}}}"), variable.Value);
             }
             var newFolder = new TemplateFolder { Name = newName };
             foreach (var subfolder in folder.Subfolders)
