@@ -3,6 +3,7 @@ using FolderCreator.Models;
 using FolderCreator.Views;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace FolderCreator.ViewModels
@@ -51,8 +52,12 @@ namespace FolderCreator.ViewModels
         {
             if (obj is Template template)
             {
-                TemplateManager.DeleteTemplate(template.Name);
-                Templates.Remove(template);
+                MessageBoxResult result = MessageBox.Show($"Czy na pewno chcesz usunąć szablon '{template.Name}'?", "Potwierdzenie usunięcia", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    TemplateManager.DeleteTemplate(template.Name);
+                    Templates.Remove(template);
+                }
             }
         }
 
@@ -108,7 +113,7 @@ namespace FolderCreator.ViewModels
                         SetVariables setVariables = new(template.Variables);
                         if (setVariables.ShowDialog() == true)
                         {
-                            variables = setVariables.Variables;                          
+                            variables = setVariables.Variables;
                         }
                         else
                         {
@@ -116,7 +121,15 @@ namespace FolderCreator.ViewModels
                         }
                     }
 
-                    TemplateManager.ApplyTemplate(template, folderName, variables);
+                    bool isSuccess = TemplateManager.ApplyTemplate(template, folderName, variables);
+                    if (isSuccess)
+                    {
+                        MessageBox.Show("Foldery zostały pomyślnie utworzone.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wystąpił błąd podczas tworzenia folderów.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }
