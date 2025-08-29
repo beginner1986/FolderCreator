@@ -7,7 +7,8 @@
         xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
         xmlns:converters="clr-namespace:FolderCreator.Converters"
         mc:Ignorable="d"
-        Title="Nowy szablon" Height="450" Width="800">
+        Title="Nowy szablon" Height="450" Width="800"
+        KeyDown="Window_KeyDown">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
@@ -49,13 +50,20 @@
                 x:Name="TemplateNameTextBox"
                 Width="200" 
                 Text="{Binding CurrentTemplate.Name, UpdateSourceTrigger=PropertyChanged}"
-                VerticalContentAlignment="Center"/>
+                VerticalContentAlignment="Center"
+                Height="25"/>
         </StackPanel>
 
         <!-- Folder Path Input -->
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
             <Label Content="Ścieżka nowego folderu:"/>
-            <TextBox x:Name="NewFolderTextBox" Width="200"/>
+            <TextBox 
+                x:Name="NewFolderTextBox"
+                Width="200"
+                KeyDown="NewFolderTextBox_KeyDown"
+                VerticalContentAlignment="Center"
+                Height="25"
+            />
             <Button 
                 Margin="5,0,0,0" 
                 Click="AddButton_Click"
@@ -95,7 +103,8 @@
                                  VerticalAlignment="Center"
                                  MinWidth="100"
                                  LostFocus="TextBox_LostFocus"
-                                 KeyDown="TextBox_KeyDown"/>
+                                 KeyDown="TextBox_KeyDown"
+                                 Height="25"/>
                         <TextBlock Text="{Binding Name}"
                                    Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                                    VerticalAlignment="Center" />

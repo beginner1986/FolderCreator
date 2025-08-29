@@ -193,6 +193,29 @@ namespace FolderCreator.Views
             }
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                if (CurrentlyEditing != null)
+                {
+                    StopEditing(CurrentlyEditing);
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+        }
+
+        private void NewFolderTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                AddButton_Click(sender, e);
+            }
+        }
+
         private void StartEditing(TemplateFolder folder)
         {
             if (CurrentlyEditing != null)
