@@ -64,5 +64,34 @@ namespace FolderCreator.Models
             }
             return templates;
         }
+
+        public static bool ApplyTemplate(Template template, string targetPath)
+        {
+            try
+            {
+                foreach (var folder in template.Folders)
+                {
+                    CreateFolderRecursively(folder, targetPath);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static void CreateFolderRecursively(TemplateFolder folder, string parentPath)
+        {
+            string folderPath = Path.Combine(parentPath, folder.Name);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            foreach (var subfolder in folder.Subfolders)
+            {
+                CreateFolderRecursively(subfolder, folderPath);
+            }
+        }
     }
 }

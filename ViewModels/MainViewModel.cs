@@ -93,13 +93,15 @@ namespace FolderCreator.ViewModels
             {
                 var folderDialog = new OpenFolderDialog
                 {
-                    // Set options here
+                    Title = "Wybierz lokalizację do utworzenia folderów",
+                    Multiselect = false
                 };
 
                 if (folderDialog.ShowDialog() == true)
                 {
                     var folderName = folderDialog.FolderName;
-                    // Do something with the result
+                    
+                    CreateFoldersFromTemplate(template, folderName);
                 }
             }
         }
