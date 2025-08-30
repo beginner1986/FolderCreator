@@ -15,12 +15,17 @@
         <Style x:Key="IconButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Margin" Value="3"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#DDDDDD"/>
@@ -79,13 +84,23 @@
                                    Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                                    VerticalAlignment="Center" />
                         <Button Click="AddSubfolderButton_Click"
+                                ToolTip="Dodaj podfolder"
                                 Tag="{Binding}"
                                 Style="{StaticResource IconButtonStyle}"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center">
                             <materialIcons:MaterialIcon Kind="PlusOutline" Width="20" Height="20" />
                         </Button>
+                        <Button Click="AddVariableButton_Click"
+                            ToolTip="Zamień na zmienną"    
+                            Tag="{Binding}"
+                            Style="{StaticResource IconButtonStyle}"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialIcons:MaterialIcon Kind="CodeBraces" Width="20" Height="20" />
+                        </Button>
                         <Button Click="EditSubfolderButton_Click"
+                                ToolTip="Edytuj nazwę folderu"
                                 Tag="{Binding}"
                                 Style="{StaticResource IconButtonStyle}"
                                 Margin="10,0,0,0"
@@ -93,6 +108,7 @@
                             <materialIcons:MaterialIcon Kind="PencilOutline" Width="20" Height="20" />
                         </Button>
                         <Button Click="RemoveSubfolderButton_Click"
+                                ToolTip="Usuń folder wraz z podfolderami"
                                 Tag="{Binding}" 
                                 Style="{StaticResource IconButtonStyle}"
                                 Foreground="Red"

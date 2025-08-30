@@ -203,24 +203,20 @@ namespace FolderCreator.Views
             }
         }
 
-        private T? FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        private void AddVariableButton_Click(object sender, RoutedEventArgs e)
         {
-            if (depObj != null)
+            if (sender is Button button && button.Tag is TemplateFolder folder)
             {
-                for (int i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(depObj); i++)
+                if (folder.Name.Contains("{{") && folder.Name.Contains("}}"))
                 {
-                    DependencyObject child = System.Windows.Media.VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        return (T)child;
-                    }
-
-                    T? childItem = FindVisualChild<T>(child);
-                    if (childItem != null) return childItem;
+                    folder.Name = folder.Name.Replace("{{", "").Replace("}}", "");
+                }
+                else
+                { 
+                    string varName = "{{" + folder.Name + "}}";
+                    folder.Name = varName;
                 }
             }
-
-            return null;
         }
 
         private void StartEditing(TemplateFolder folder)
