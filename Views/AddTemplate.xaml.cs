@@ -35,18 +35,6 @@ namespace FolderCreator.Views
             }
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            string path = NewFolderTextBox.Text.Trim();
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                CurrentTemplate.AddFolder(path);
-                NewFolderTextBox.Clear();
-                SortFolders();
-            }
-        }
-
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is TemplateFolder folder)
@@ -73,7 +61,7 @@ namespace FolderCreator.Views
 
                 if (existingTemplate != null)
                 {
-                    MessageBoxResult result = MessageBox.Show($"Template with the name '{CurrentTemplate.Name}' already exists. Do you want to replace it?", "Replace existing template?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult result = MessageBox.Show($"Szablon o nazwie '{CurrentTemplate.Name}' już istnieje. Czy chcesz go zastąpić?", "Zastąpić istniejący szablon?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                     if (result == MessageBoxResult.Yes)
                     {
@@ -201,12 +189,38 @@ namespace FolderCreator.Views
             }
         }
 
-        private void NewFolderTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void AddSubfolderButton_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (sender is Button button && button.Tag is TemplateFolder folder)
             {
-                AddButton_Click(sender, e);
+                folder.AddSubfolder("Nowy Folder");
+                SortFolders();
+                var newSubfolder = folder.Subfolders.FirstOrDefault(sf => sf.Name == "Nowy Folder");
+                if (newSubfolder != null)
+                {
+                    StartEditing(newSubfolder);
+                }
             }
+        }
+
+        private T? FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = System.Windows.Media.VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        return (T)child;
+                    }
+
+                    T? childItem = FindVisualChild<T>(child);
+                    if (childItem != null) return childItem;
+                }
+            }
+
+            return null;
         }
 
         private void StartEditing(TemplateFolder folder)

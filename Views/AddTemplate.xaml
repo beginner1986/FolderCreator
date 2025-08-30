@@ -53,39 +53,9 @@
                 VerticalContentAlignment="Center"
                 Height="25"/>
         </StackPanel>
-
-        <!-- Folder Path Input -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-            <Label Content="Ścieżka nowego folderu:"/>
-            <TextBox 
-                x:Name="NewFolderTextBox"
-                Width="200"
-                KeyDown="NewFolderTextBox_KeyDown"
-                VerticalContentAlignment="Center"
-                Height="25"
-            />
-            <Button 
-                Margin="5,0,0,0" 
-                Click="AddButton_Click"
-                HorizontalAlignment="Center" 
-                FontSize="14"
-                VerticalAlignment="Center"
-            >
-                <StackPanel Orientation="Horizontal">
-                    <materialIcons:MaterialIcon Kind="Add" Margin="0,0,10,0"/>
-                    <TextBlock 
-                        Text="Dodaj folder" 
-                        HorizontalAlignment="Center" 
-                        FontSize="14"
-                        VerticalAlignment="Center"
-                        Margin="0,0,10,0"
-                    />
-                </StackPanel>
-        </Button>
-        </StackPanel>
-
+       
         <!-- List of Folder Paths -->
-        <TreeView ItemsSource="{Binding CurrentTemplate.Folders}" FontSize="14" Grid.Row="2" Margin="0,5,0,0">
+        <TreeView x:Name="TemplatesTreeView" ItemsSource="{Binding CurrentTemplate.Folders}" FontSize="14" Grid.Row="2" Margin="0,5,0,0">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True"/>
@@ -108,6 +78,13 @@
                         <TextBlock Text="{Binding Name}"
                                    Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                                    VerticalAlignment="Center" />
+                        <Button Click="AddSubfolderButton_Click"
+                                Tag="{Binding}"
+                                Style="{StaticResource IconButtonStyle}"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center">
+                            <materialIcons:MaterialIcon Kind="PlusOutline" Width="20" Height="20" />
+                        </Button>
                         <Button Click="EditSubfolderButton_Click"
                                 Tag="{Binding}"
                                 Style="{StaticResource IconButtonStyle}"

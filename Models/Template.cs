@@ -20,7 +20,7 @@ namespace FolderCreator.Models
                 }
             }
         }
-        public ObservableCollection<TemplateFolder> Folders { get; set; } = [];
+        public ObservableCollection<TemplateFolder> Folders { get; set; } = new ObservableCollection<TemplateFolder>([new TemplateFolder { Name = "Nowy Folder" }]);
         public List<string> Variables
         {
             get

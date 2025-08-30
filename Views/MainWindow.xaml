@@ -32,7 +32,7 @@
         <TextBox 
             Grid.ColumnSpan="2"
             Grid.Row="0"
-            Text="Aplikacja Folderowa v.1.0" 
+            Text="Aplikacja Folderowa v.0.9 beta" 
             FontSize="20" 
             FontWeight="Bold"
             BorderThickness="0"
