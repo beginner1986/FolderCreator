@@ -95,20 +95,6 @@ namespace FolderCreator.Views
             this.Close();
         }
 
-        private void SortFolders()
-        {
-            var sortedFolders = CurrentTemplate.Folders.OrderBy(f => f.Name).ToList();
-            foreach (var folder in sortedFolders)
-            {
-                folder.Subfolders = new System.Collections.ObjectModel.ObservableCollection<TemplateFolder>(folder.Subfolders.OrderBy(sf => sf.Name));
-            }
-            CurrentTemplate.Folders.Clear();
-            foreach (var folder in sortedFolders)
-            {
-                CurrentTemplate.Folders.Add(folder);
-            }
-        }
-
         private void RemoveSubfolderButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is TemplateFolder subfolder)
@@ -123,19 +109,6 @@ namespace FolderCreator.Views
                     CurrentTemplate.Folders.Remove(subfolder);
                 }
             }
-        }
-
-        private static TemplateFolder? FindParentFolder(System.Collections.ObjectModel.ObservableCollection<TemplateFolder> folders, TemplateFolder target)
-        {
-            foreach (var folder in folders)
-            {
-                if (folder.Subfolders.Contains(target))
-                    return folder;
-                var parent = FindParentFolder(folder.Subfolders, target);
-                if (parent != null)
-                    return parent;
-            }
-            return null;
         }
 
         private void EditSubfolderButton_Click(object sender, RoutedEventArgs e)
@@ -237,6 +210,20 @@ namespace FolderCreator.Views
                 }
             }
         }
+        
+        private void SortFolders()
+        {
+            var sortedFolders = CurrentTemplate.Folders.OrderBy(f => f.Name).ToList();
+            foreach (var folder in sortedFolders)
+            {
+                folder.Subfolders = new System.Collections.ObjectModel.ObservableCollection<TemplateFolder>(folder.Subfolders.OrderBy(sf => sf.Name));
+            }
+            CurrentTemplate.Folders.Clear();
+            foreach (var folder in sortedFolders)
+            {
+                CurrentTemplate.Folders.Add(folder);
+            }
+        }
 
         private void StartEditing(TemplateFolder folder)
         {
@@ -255,6 +242,19 @@ namespace FolderCreator.Views
                 folder.IsEditing = false;
                 CurrentlyEditing = null;
             }
+        }
+
+        private static TemplateFolder? FindParentFolder(System.Collections.ObjectModel.ObservableCollection<TemplateFolder> folders, TemplateFolder target)
+        {
+            foreach (var folder in folders)
+            {
+                if (folder.Subfolders.Contains(target))
+                    return folder;
+                var parent = FindParentFolder(folder.Subfolders, target);
+                if (parent != null)
+                    return parent;
+            }
+            return null;
         }
     }
 }
