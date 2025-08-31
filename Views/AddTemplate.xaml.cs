@@ -117,6 +117,21 @@ namespace FolderCreator.Views
             if (sender is Button button && button.Tag is TemplateFolder subfolder)
             {
                 StartEditing(subfolder);
+                
+                Dispatcher.BeginInvoke(new Action(() => {
+                    TreeViewItem? treeViewItem = FindTreeViewItemForFolder(TemplatesTreeView, subfolder);
+                    if (treeViewItem != null)
+                    {
+                        treeViewItem.Focus();
+                        
+                        TextBox? textBox = FindVisualChild<TextBox>(treeViewItem);
+                        if (textBox != null)
+                        {
+                            textBox.Focus();
+                            textBox.SelectAll();
+                        }
+                    }
+                }), System.Windows.Threading.DispatcherPriority.Render);
             }
         }
 
