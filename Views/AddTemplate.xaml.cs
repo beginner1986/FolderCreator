@@ -195,6 +195,29 @@ namespace FolderCreator.Views
                     }
                 }
             }
+
+            if (e.Key == Key.Enter)
+            {
+                if (TemplatesTreeView.SelectedItem is TemplateFolder selectedFolder)
+                {
+                    StartEditing(selectedFolder);
+                    
+                    Dispatcher.BeginInvoke(new Action(() => {
+                        TreeViewItem? treeViewItem = FindTreeViewItemForFolder(TemplatesTreeView, selectedFolder);
+                        if (treeViewItem != null)
+                        {
+                            treeViewItem.Focus();
+                            
+                            TextBox? textBox = FindVisualChild<TextBox>(treeViewItem);
+                            if (textBox != null)
+                            {
+                                textBox.Focus();
+                                textBox.SelectAll();
+                            }
+                        }
+                    }), System.Windows.Threading.DispatcherPriority.Render);
+                }
+            }
         }
 
         private void AddSubfolderButton_Click(object sender, RoutedEventArgs e)
