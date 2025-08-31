@@ -189,6 +189,25 @@ namespace FolderCreator.Views
             }
         }
 
+        private void TemplatesTreeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                if (TemplatesTreeView.SelectedItem is TemplateFolder selectedFolder)
+                {
+                    TemplateFolder? parent = FindParentFolder(CurrentTemplate.Folders, selectedFolder);
+                    if (parent != null)
+                    {
+                        parent.Subfolders.Remove(selectedFolder);
+                    }
+                    else
+                    {
+                        CurrentTemplate.Folders.Remove(selectedFolder);
+                    }
+                }
+            }
+        }
+
         private void AddSubfolderButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is TemplateFolder folder)
