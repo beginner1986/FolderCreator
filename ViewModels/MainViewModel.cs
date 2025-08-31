@@ -165,7 +165,16 @@ namespace FolderCreator.ViewModels
 
         private void ShowInfo(object? obj)
         {
-            MessageBox.Show("Aplikacja folderowa\nWersja: 0.9 beta\nAutor: Adam Emieljaniuk\nEmail: beginner1986@gmail.com\n(C)2025", "O aplikacji", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(
+                $"Aplikacja do szybkiego tworzenia folderów według szablonów.\n\n" +
+                $"Wersja: {AppInfo.Version}\n\n" +
+                $"Autor: {AppInfo.Author}\n\n" +
+                $"Kontakt: {AppInfo.Email}\n\n" +
+                $"{AppInfo.Copyright}",
+                $"O programie {AppInfo.Name}",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
         }
 
         private void FilterTemplates()
