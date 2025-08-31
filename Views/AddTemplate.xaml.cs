@@ -3,6 +3,7 @@ using FolderCreator.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace FolderCreator.Views
 {
@@ -191,6 +192,21 @@ namespace FolderCreator.Views
                 if (newSubfolder != null)
                 {
                     StartEditing(newSubfolder);
+                    
+                    Dispatcher.BeginInvoke(new Action(() => {
+                        TreeViewItem? treeViewItem = FindTreeViewItemForFolder(TemplatesTreeView, newSubfolder);
+                        if (treeViewItem != null)
+                        {
+                            treeViewItem.Focus();
+                            
+                            TextBox? textBox = FindVisualChild<TextBox>(treeViewItem);
+                            if (textBox != null)
+                            {
+                                textBox.Focus();
+                                textBox.SelectAll();
+                            }
+                        }
+                    }), System.Windows.Threading.DispatcherPriority.Render);
                 }
             }
         }
@@ -254,6 +270,49 @@ namespace FolderCreator.Views
                 if (parent != null)
                     return parent;
             }
+            return null;
+        }
+
+        private TreeViewItem? FindTreeViewItemForFolder(ItemsControl container, TemplateFolder targetFolder)
+        {
+            if (container == null) return null;
+
+            for (int i = 0; i < container.Items.Count; i++)
+            {
+                var item = container.Items[i];
+                if (item == targetFolder)
+                {
+                    var containerItem = container.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
+                    if (containerItem != null)
+                        return containerItem;
+                }
+
+                var childContainer = container.ItemContainerGenerator.ContainerFromIndex(i) as ItemsControl;
+                if (childContainer != null)
+                {
+                    var result = FindTreeViewItemForFolder(childContainer, targetFolder);
+                    if (result != null)
+                        return result;
+                }
+            }
+
+            return null;
+        }
+
+        private T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                
+                if (child is T typedChild)
+                    return typedChild;
+
+                T? childOfChild = FindVisualChild<T>(child);
+                if (childOfChild != null)
+                    return childOfChild;
+            }
+            
             return null;
         }
     }
