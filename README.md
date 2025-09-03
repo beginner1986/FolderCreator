@@ -19,10 +19,23 @@ Aplikacja Folderowa to narzêdzie WPF, które umo¿liwia tworzenie struktury folder
 
 ## Instrukcja budowania release z linii poleceñ
 
-Aby zbudowaæ wersjê Release aplikacji z linii poleceñ, wykonaj nastêpuj¹ce kroki:
-1.  Otwórz terminal lub wiersz poleceñ.
-2. PrzejdŸ do katalogu g³ównego projektu, gdzie znajduje siê plik `FolderCreator.csproj`.
-3. Wykonaj nastêpuj¹ce polecenie, aby zbudowaæ projekt w trybie Release i opublikowaæ go do okreœlonego folderu:
+### Budowanie instalatora MSI
+
+Aby zbudowaæ instalator MSI aplikacji:
+1. Otwórz PowerShell lub Windows Terminal.
+2. PrzejdŸ do katalogu g³ównego projektu.
+3. Uruchom skrypt build.bat (wymaga PowerShell):
+    ```powershell
+    .\build.bat
+    ```
+4. Po zakoñczeniu procesu, instalator MSI zostanie utworzony w folderze `build`.
+
+### Manualne budowanie aplikacji (bez instalatora)
+
+Aby rêcznie zbudowaæ tylko aplikacjê .NET bez tworzenia instalatora:
+1. Otwórz terminal lub wiersz poleceñ.
+2. PrzejdŸ do katalogu `App`, gdzie znajduje siê plik projektu.
+3. Wykonaj nastêpuj¹ce polecenie, aby zbudowaæ projekt w trybie Release:
     ```bash
     dotnet publish -c Release -o ./publish
     ```
