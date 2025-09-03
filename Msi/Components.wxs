@@ -1,0 +1,29 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup 
+        Id="AppComponents" 
+        Directory="INSTALLFOLDER">
+      <Component Id="MainExecutable">
+        <File Source="../temp/FolderCreator.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="MainDll">
+        <File Source="../temp/FolderCreator.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="DepsJson">
+        <File Source="../temp/FolderCreator.deps.json" KeyPath="yes" />
+      </Component>
+      <Component Id="RuntimeConfig">
+        <File Source="../temp/FolderCreator.runtimeconfig.json" KeyPath="yes" />
+      </Component>
+      <Component Id="PdbFile">
+        <File Source="../temp/FolderCreator.pdb" KeyPath="yes" />
+      </Component>
+      <Component Id="MaterialIconsDll">
+        <File Source="../temp/Material.Icons.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="MaterialIconsWPFDll">
+        <File Source="../temp/Material.Icons.WPF.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
