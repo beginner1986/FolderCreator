@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Aplikacja Folderowa" Language="1033" Version="0.9.1.0" Manufacturer="beginner1986" UpgradeCode="037e74e1-35cb-40ea-a1f4-df1a0aef7ab7">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="Na tym komputerze jest zainstalowana [ProductName] w nowszej wersji." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="App" Title="FolderCreator" Level="1">
+			<ComponentGroupRef Id="FolderCreatorApp" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="FolderCreator" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="FolderCreatorApp" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent" Guid="8F4D5A0F-6451-4023-BE6A-719AE072FB39">
+				<File Source="..\temp\FolderCreator.exe" KeyPath="yes" />
+				<File Source="..\temp\FolderCreator.deps.json" />
+				<File Source="..\temp\FolderCreator.dll" />
+				<File Source="..\temp\FolderCreator.pdb" />
+				<File Source="..\temp\FolderCreator.runtimeconfig.json" />
+				<File Source="..\temp\Material.Icons.dll" />
+				<File Source="..\temp\Material.Icons.WPF.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
