@@ -5,9 +5,12 @@
 
 		<MajorUpgrade DowngradeErrorMessage="Na tym komputerze jest zainstalowana [ProductName] w nowszej wersji." />
 		<MediaTemplate EmbedCab="yes" />
+		<Icon Id="AppIcon" SourceFile="favicon.ico" />
+		<Property Id="ARPPRODUCTICON" Value="AppIcon" />
 
 		<Feature Id="App" Title="FolderCreator" Level="1">
 			<ComponentGroupRef Id="FolderCreatorApp" />
+			<ComponentRef Id="ApplicationShortcutDesktop" />
 		</Feature>
 	</Product>
 </Wix>

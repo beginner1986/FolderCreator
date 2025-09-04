@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="DesktopFolder">
+            <Component Id="ApplicationShortcutDesktop" Guid="*">
+                <Shortcut Id="ApplicationDesktopShortcut"
+                          Name="FolderCreator"
+                          Description="Aplikacja Folderowa"
+                          Target="[INSTALLFOLDER]FolderCreator.exe"
+                          WorkingDirectory="INSTALLFOLDER"
+                          Icon="AppIcon"/>
+                <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\beginner1986\FolderCreator" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>
