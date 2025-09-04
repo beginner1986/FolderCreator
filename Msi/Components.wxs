@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<ComponentGroup Id="FolderCreatorApp" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent" Guid="8F4D5A0F-6451-4023-BE6A-719AE072FB39">
+				<File Source="..\temp\FolderCreator.exe" KeyPath="yes" />
+				<File Source="..\temp\FolderCreator.deps.json" />
+				<File Source="..\temp\FolderCreator.dll" />
+				<File Source="..\temp\FolderCreator.pdb" />
+				<File Source="..\temp\FolderCreator.runtimeconfig.json" />
+				<File Source="..\temp\Material.Icons.dll" />
+				<File Source="..\temp\Material.Icons.WPF.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
