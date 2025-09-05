@@ -1,0 +1,20 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Package 
+		Name="Aplikacja Folderowa" 
+		Version="0.9.1.0" 
+		Manufacturer="beginner1986" 
+		UpgradeCode="037e74e1-35cb-40ea-a1f4-df1a0aef7ab7">
+		
+
+		<MajorUpgrade 
+			DowngradeErrorMessage="Na tym komputerze jest zainstalowana [ProductName] w nowszej wersji." />
+		<MediaTemplate EmbedCab="yes" />
+		<Icon Id="AppIcon" SourceFile="favicon.ico" />
+		<Property Id="ARPPRODUCTICON" Value="AppIcon" />
+
+		<Feature Id="App" Title="FolderCreator" Level="1">
+			<ComponentGroupRef Id="FolderCreatorApp" />
+			<ComponentRef Id="ApplicationShortcutDesktop" />
+		</Feature>
+	</Package>
+</Wix>
