@@ -15,32 +15,9 @@
 		<Property Id="ARPPRODUCTICON" Value="AppIcon" />
 
 		<Feature Id="App" Title="FolderCreator" Level="1">
-			<ComponentGroupRef Id="FolderCreatorAppComponent" />
+			<ComponentGroupRef Id="AppComponent" />
 			<ComponentRef Id="ApplicationShortcutDesktop" />
 			<ComponentRef Id="ContextMenuComponent" />
 		</Feature>
-
-		<!-- Add Registry entries for context menu -->
-		<DirectoryRef Id="TARGETDIR">
-			<Component Id="ContextMenuComponent" Guid="*">
-				<!-- Background (empty space) context menu -->
-				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa">
-					<RegistryValue Type="string" Value="Aplikacja Folderowa" />
-					<RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
-				</RegistryKey>
-				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa\command">
-					<RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%V&quot;" />
-				</RegistryKey>
-				
-				<!-- Folder context menu -->
-				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa">
-					<RegistryValue Type="string" Value="Aplikacja Folderowa" />
-					<RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
-				</RegistryKey>
-				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa\command">
-					<RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%1&quot;" />
-				</RegistryKey>
-			</Component>
-		</DirectoryRef>
 	</Package>
 </Wix>

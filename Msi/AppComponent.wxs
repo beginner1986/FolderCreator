@@ -1,6 +1,6 @@
 ﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
 	<Fragment>
-		<ComponentGroup Id="FolderCreatorAppComponent" Directory="INSTALLFOLDER">
+		<ComponentGroup Id="AppComponent" Directory="INSTALLFOLDER">
 			<Component Id="ProductComponent" Guid="8F4D5A0F-6451-4023-BE6A-719AE072FB39">
 				<File Source="$(var.AppSourceDir)FolderCreator.exe" KeyPath="yes" />
 				<File Source="$(var.AppSourceDir)FolderCreator.deps.json" />

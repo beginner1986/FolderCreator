@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+    <Fragment>
+        <!-- Add Registry entries for context menu -->
+        <Component Id="ContextMenuComponent" Guid="*">
+            <!-- Background (empty space) context menu -->
+            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa">
+                <RegistryValue Type="string" Value="Aplikacja Folderowa" />
+                <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
+            </RegistryKey>
+            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa\command">
+                <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%V&quot;" />
+            </RegistryKey>
+                
+            <!-- Folder context menu -->
+            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa">
+                <RegistryValue Type="string" Value="Aplikacja Folderowa" />
+                <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
+            </RegistryKey>
+            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa\command">
+                <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%1&quot;" />
+            </RegistryKey>
+        </Component>
+    </Fragment>
+</Wix>
