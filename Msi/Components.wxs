@@ -9,6 +9,7 @@
 				<File Source="$(var.AppSourceDir)FolderCreator.runtimeconfig.json" />
 				<File Source="$(var.AppSourceDir)Material.Icons.dll" />
 				<File Source="$(var.AppSourceDir)Material.Icons.WPF.dll" />
+				<File Source="favicon.ico" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>

@@ -1,20 +1,46 @@
-﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	 xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
 	<Package 
 		Name="Aplikacja Folderowa" 
 		Version="0.9.1.0" 
 		Manufacturer="beginner1986" 
 		UpgradeCode="037e74e1-35cb-40ea-a1f4-df1a0aef7ab7">
-		
 
 		<MajorUpgrade 
 			DowngradeErrorMessage="Na tym komputerze jest zainstalowana [ProductName] w nowszej wersji." />
 		<MediaTemplate EmbedCab="yes" />
+		
 		<Icon Id="AppIcon" SourceFile="favicon.ico" />
+		
 		<Property Id="ARPPRODUCTICON" Value="AppIcon" />
 
 		<Feature Id="App" Title="FolderCreator" Level="1">
 			<ComponentGroupRef Id="FolderCreatorAppComponent" />
 			<ComponentRef Id="ApplicationShortcutDesktop" />
+			<ComponentRef Id="ContextMenuComponent" />
 		</Feature>
+
+		<!-- Add Registry entries for context menu -->
+		<DirectoryRef Id="TARGETDIR">
+			<Component Id="ContextMenuComponent" Guid="*">
+				<!-- Use HKLM instead of HKCU for wider accessibility -->
+				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa">
+					<RegistryValue Type="string" Value="Aplikacja Folderowa" />
+					<RegistryValue Name="Icon" Type="string" Value="&quot;[#AppIcon]&quot;" />
+				</RegistryKey>
+				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa\command">
+					<RegistryValue Type="string" Value="&quot;[#FolderCreator.exe]&quot; &quot;%V&quot;" />
+				</RegistryKey>
+				
+				<!-- Also add context menu when right-clicking on a folder -->
+				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa">
+					<RegistryValue Type="string" Value="Aplikacja Folderowa" />
+					<RegistryValue Name="Icon" Type="string" Value="&quot;[#AppIcon]&quot;" />
+				</RegistryKey>
+				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa\command">
+					<RegistryValue Type="string" Value="&quot;[#FolderCreator.exe]&quot; &quot;%1&quot;" />
+				</RegistryKey>
+			</Component>
+		</DirectoryRef>
 	</Package>
 </Wix>
