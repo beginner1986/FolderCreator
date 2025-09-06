@@ -13,7 +13,7 @@
 		<Property Id="ARPPRODUCTICON" Value="AppIcon" />
 
 		<Feature Id="App" Title="FolderCreator" Level="1">
-			<ComponentGroupRef Id="FolderCreatorApp" />
+			<ComponentGroupRef Id="FolderCreatorAppComponent" />
 			<ComponentRef Id="ApplicationShortcutDesktop" />
 		</Feature>
 	</Package>

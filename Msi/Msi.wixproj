@@ -1,5 +1,11 @@
 <Project Sdk="WixToolset.Sdk/6.0.2">
+  <PropertyGroup>
+    <AppSourceDir>$(MSBuildThisFileDirectory)..\App\bin\$(Configuration)\net8.0-windows\</AppSourceDir>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DefineConstants>Debug</DefineConstants>
+    <DefineConstants>Debug;AppSourceDir=$(AppSourceDir)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DefineConstants>AppSourceDir=$(AppSourceDir)</DefineConstants>
   </PropertyGroup>
 </Project>

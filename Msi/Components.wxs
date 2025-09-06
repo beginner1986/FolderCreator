@@ -1,14 +1,14 @@
 ﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
 	<Fragment>
-		<ComponentGroup Id="FolderCreatorApp" Directory="INSTALLFOLDER">
+		<ComponentGroup Id="FolderCreatorAppComponent" Directory="INSTALLFOLDER">
 			<Component Id="ProductComponent" Guid="8F4D5A0F-6451-4023-BE6A-719AE072FB39">
-				<File Id="FolderCreator.exe" Source="..\App\bin\Release\net8.0-windows\FolderCreator.exe" KeyPath="yes" />
-				<File Id="FolderCreator.deps.json" Source="..\App\bin\Release\net8.0-windows\FolderCreator.deps.json" />
-				<File Id="FolderCreator.dll" Source="..\App\bin\Release\net8.0-windows\FolderCreator.dll" />
-				<File Id="FolderCreator.pdb" Source="..\App\bin\Release\net8.0-windows\FolderCreator.pdb" />
-				<File Id="FolderCreator.runtimeconfig.json" Source="..\App\bin\Release\net8.0-windows\FolderCreator.runtimeconfig.json" />
-				<File Id="Material.Icons.dll" Source="..\App\bin\Release\net8.0-windows\Material.Icons.dll" />
-				<File Id="Material.Icons.WPF.dll" Source="..\App\bin\Release\net8.0-windows\Material.Icons.WPF.dll" />
+				<File Source="$(var.AppSourceDir)FolderCreator.exe" KeyPath="yes" />
+				<File Source="$(var.AppSourceDir)FolderCreator.deps.json" />
+				<File Source="$(var.AppSourceDir)FolderCreator.dll" />
+				<File Source="$(var.AppSourceDir)FolderCreator.pdb" />
+				<File Source="$(var.AppSourceDir)FolderCreator.runtimeconfig.json" />
+				<File Source="$(var.AppSourceDir)Material.Icons.dll" />
+				<File Source="$(var.AppSourceDir)Material.Icons.WPF.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
