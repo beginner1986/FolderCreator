@@ -23,22 +23,22 @@
 		<!-- Add Registry entries for context menu -->
 		<DirectoryRef Id="TARGETDIR">
 			<Component Id="ContextMenuComponent" Guid="*">
-				<!-- Use HKLM instead of HKCU for wider accessibility -->
+				<!-- Background (empty space) context menu -->
 				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa">
 					<RegistryValue Type="string" Value="Aplikacja Folderowa" />
-					<RegistryValue Name="Icon" Type="string" Value="&quot;[#AppIcon]&quot;" />
+					<RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
 				</RegistryKey>
 				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa\command">
-					<RegistryValue Type="string" Value="&quot;[#FolderCreator.exe]&quot; &quot;%V&quot;" />
+					<RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%V&quot;" />
 				</RegistryKey>
 				
-				<!-- Also add context menu when right-clicking on a folder -->
+				<!-- Folder context menu -->
 				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa">
 					<RegistryValue Type="string" Value="Aplikacja Folderowa" />
-					<RegistryValue Name="Icon" Type="string" Value="&quot;[#AppIcon]&quot;" />
+					<RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
 				</RegistryKey>
 				<RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa\command">
-					<RegistryValue Type="string" Value="&quot;[#FolderCreator.exe]&quot; &quot;%1&quot;" />
+					<RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%1&quot;" />
 				</RegistryKey>
 			</Component>
 		</DirectoryRef>
