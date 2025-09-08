@@ -9,7 +9,7 @@
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
             </RegistryKey>
 			<RegistryKey Key="command">
-				<RegistryValue Value="[INSTALLFOLDER]YourApp.exe -contextmenu" Type="string" />
+				<RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
 			</RegistryKey>
                 
             <!-- Folder context menu -->
@@ -18,7 +18,7 @@
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
             </RegistryKey>
 			<RegistryKey Key="command">
-				<RegistryValue Value="[INSTALLFOLDER]YourApp.exe -contextmenu" Type="string" />
+				<RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
 			</RegistryKey>
         </Component>
     </Fragment>
