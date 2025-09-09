@@ -18,6 +18,7 @@
 			<ComponentGroupRef Id="AppComponent" />
 			<ComponentRef Id="ApplicationShortcutDesktop" />
 			<ComponentRef Id="ContextMenuComponent" />
+			<ComponentRef Id="CleanupAppDataFolder" />
 		</Feature>
 	</Package>
 </Wix>

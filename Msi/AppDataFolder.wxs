@@ -1,0 +1,23 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+  <Fragment>
+    <Property Id="APPDATAFOLDERTOREMOVE">
+      <RegistrySearch Id="AppDataFolderToRemoveSearch"
+                      Root="HKCU"
+                      Key="Software\beginner1986\FolderCreator"
+                      Name="AppDataPath"
+                      Type="raw" />
+    </Property>
+
+    <StandardDirectory Id="AppDataFolder">
+      <Directory Id="AppDataCompanyFolder" Name="FolderCreator">
+        <Component Id="CleanupAppDataFolder" Guid="*">
+          <RegistryValue Root="HKCU" Key="Software\beginner1986\FolderCreator" 
+                         Name="AppDataPath" Type="string" Value="[AppDataCompanyFolder]" KeyPath="yes" />
+          <util:RemoveFolderEx On="uninstall" Property="APPDATAFOLDERTOREMOVE" />
+          <RemoveFolder Id="RemoveAppDataCompanyFolder" On="uninstall" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+  </Fragment>
+</Wix>
