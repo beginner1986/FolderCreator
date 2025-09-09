@@ -7,19 +7,19 @@
             <RegistryKey Root="HKCR" Key="Directory\Background\shell\AplikacjaFolderowa">
                 <RegistryValue Name="MUIVerb" Type="string" Value="Aplikacja Folderowa" />
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
+                <RegistryKey Key="command">
+                    <RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
+                </RegistryKey>
             </RegistryKey>
-			<RegistryKey Key="command">
-				<RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
-			</RegistryKey>
                 
             <!-- Folder context menu -->
             <RegistryKey Root="HKCR" Key="Directory\shell\AplikacjaFolderowa">
                 <RegistryValue Name="MUIVerb" Type="string" Value="Aplikacja Folderowa" />
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
+                <RegistryKey Key="command">
+                    <RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
+                </RegistryKey>
             </RegistryKey>
-			<RegistryKey Key="command">
-				<RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
-			</RegistryKey>
         </Component>
     </Fragment>
 </Wix>

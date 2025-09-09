@@ -7,18 +7,45 @@ namespace FolderCreator.Models
 {
     public static class TemplateManager
     {
-        private static readonly string TemplatesDirectory = "Templates";
+        // Use AppData folder for user-specific template storage
+        private static readonly string TemplatesDirectory = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "FolderCreator",
+            "Templates");
+            
+        private static bool _isInitialized = false;
+        private static string _initializationError = string.Empty;
 
         static TemplateManager()
         {
-            if (!Directory.Exists(TemplatesDirectory))
+            try
             {
-                Directory.CreateDirectory(TemplatesDirectory);
+                // Create directory structure if it doesn't exist
+                if (!Directory.Exists(TemplatesDirectory))
+                {
+                    Directory.CreateDirectory(TemplatesDirectory);
+                }
+                _isInitialized = true;
+                
+                // Log success for debugging
+                System.Diagnostics.Debug.WriteLine($"Templates directory initialized at: {TemplatesDirectory}");
+            }
+            catch (Exception ex)
+            {
+                _initializationError = $"Failed to initialize Templates directory: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine(_initializationError);
+                // Don't rethrow - let the methods handle the uninitialized state
             }
         }
 
+        public static bool IsInitialized => _isInitialized;
+        public static string InitializationError => _initializationError;
+
         public static void SaveTemplate(Template template)
         {
+            if (!_isInitialized)
+                throw new InvalidOperationException(_initializationError);
+
             var templatePath = Path.Combine(TemplatesDirectory, $"{template.Name}.json");
             var json = JsonSerializer.Serialize(template, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(templatePath, json);
@@ -26,6 +53,9 @@ namespace FolderCreator.Models
 
         public static Template? LoadTemplate(string templateName)
         {
+            if (!_isInitialized)
+                throw new InvalidOperationException(_initializationError);
+
             string filePath = Path.Combine(TemplatesDirectory, $"{templateName}.json");
             if (!File.Exists(filePath))
             {
@@ -33,12 +63,14 @@ namespace FolderCreator.Models
             }
 
             string json = File.ReadAllText(filePath);
-
             return JsonSerializer.Deserialize<Template>(json);
         }
 
         public static void DeleteTemplate(string templateName)
         {
+            if (!_isInitialized)
+                throw new InvalidOperationException(_initializationError);
+
             string filePath = Path.Combine(TemplatesDirectory, $"{templateName}.json");
             if (File.Exists(filePath))
             {
@@ -49,6 +81,13 @@ namespace FolderCreator.Models
         public static ObservableCollection<Template> GetAllTemplates()
         {
             var templates = new ObservableCollection<Template>();
+            
+            if (!_isInitialized)
+            {
+                System.Diagnostics.Debug.WriteLine(_initializationError);
+                return templates; // Return empty collection instead of throwing
+            }
+
             if (!Directory.Exists(TemplatesDirectory))
             {
                 return templates;
@@ -56,11 +95,19 @@ namespace FolderCreator.Models
 
             foreach (var file in Directory.GetFiles(TemplatesDirectory, "*.json"))
             {
-                string json = File.ReadAllText(file);
-                var template = JsonSerializer.Deserialize<Template>(json);
-                if (template != null)
+                try
                 {
-                    templates.Add(template);
+                    string json = File.ReadAllText(file);
+                    var template = JsonSerializer.Deserialize<Template>(json);
+                    if (template != null)
+                    {
+                        templates.Add(template);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error loading template from {file}: {ex.Message}");
+                    // Continue with other templates
                 }
             }
             return templates;
@@ -68,6 +115,9 @@ namespace FolderCreator.Models
 
         public static bool ApplyTemplate(Template template, string targetPath, Dictionary<string, string> variables)
         {
+            if (!_isInitialized)
+                throw new InvalidOperationException(_initializationError);
+
             Template processedTemplate = new Template
             {
                 Name = template.Name,
