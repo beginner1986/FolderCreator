@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace FolderCreator.Views
 {
@@ -23,8 +24,18 @@ namespace FolderCreator.Views
         {
             if (GetCursorPos(out POINT mousePos))
             {
-                this.Left = mousePos.X;
-                this.Top = mousePos.Y;
+                var source = PresentationSource.FromVisual(this);
+                if (source?.CompositionTarget != null)
+                {
+                    var matrix = source.CompositionTarget.TransformToDevice;
+                    this.Left = mousePos.X / matrix.M11;
+                    this.Top = mousePos.Y / matrix.M22;
+                }
+                else
+                {
+                    this.Left = mousePos.X;
+                    this.Top = mousePos.Y;
+                }
             }
         }
 
