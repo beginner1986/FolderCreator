@@ -65,7 +65,10 @@ namespace FolderCreator.Views
 
                     if (selectedTemplate.Variables.Count > 0)
                     {
-                        SetVariables setVariables = new(selectedTemplate.Variables);
+                        SetVariables setVariables = new(selectedTemplate.Variables)
+                        {
+                            Topmost = true
+                        };
                         if (setVariables.ShowDialog() == true)
                         {
                             variables = setVariables.Variables;
