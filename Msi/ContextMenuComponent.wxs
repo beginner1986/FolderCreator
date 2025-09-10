@@ -8,7 +8,7 @@
                 <RegistryValue Name="MUIVerb" Type="string" Value="Aplikacja Folderowa" />
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
                 <RegistryKey Key="command">
-                    <RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
+                    <RegistryValue Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; -contextmenu &quot;%V&quot;" Type="string" />
                 </RegistryKey>
             </RegistryKey>
                 
@@ -17,7 +17,7 @@
                 <RegistryValue Name="MUIVerb" Type="string" Value="Aplikacja Folderowa" />
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
                 <RegistryKey Key="command">
-                    <RegistryValue Value="[INSTALLFOLDER]FolderCreator.exe -contextmenu" Type="string" />
+                    <RegistryValue Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; -contextmenu &quot;%1&quot;" Type="string" />
                 </RegistryKey>
             </RegistryKey>
         </Component>

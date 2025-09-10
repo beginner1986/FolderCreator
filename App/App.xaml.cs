@@ -18,19 +18,21 @@ namespace FolderCreator
                 // Check if TemplateManager is initialized properly
                 if (!TemplateManager.IsInitialized)
                 {
-                    MessageBox.Show($"Error initializing template system: {TemplateManager.InitializationError}", 
-                        "Initialization Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Błąd inicjalizacji menadżera szablonów: {TemplateManager.InitializationError}",
+                        "Błąd inicjalizacji", MessageBoxButton.OK, MessageBoxImage.Error);
                     // Continue anyway to show main window
                 }
                 
-                if (e.Args.Length > 0 && e.Args[0].Equals("-contextmenu", StringComparison.OrdinalIgnoreCase))
+                if (e.Args.Length > 1 && e.Args[0].Equals("-contextmenu", StringComparison.OrdinalIgnoreCase))
                 {
                     // Even if there's an initialization error, try to get templates
                     List<Template> templates = TemplateManager.GetAllTemplates().ToList();
+                    string targetPath = e.Args[1];
+
                     if (templates.Count == 0)
                     {
-                        MessageBox.Show("No templates found or templates couldn't be loaded.", 
-                            "No Templates", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Nie znaleziono szablonów lub nie można wczytać szablonów.", 
+                            "Brak szablonów", MessageBoxButton.OK, MessageBoxImage.Information);
                         // Fall back to showing main window
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
@@ -38,7 +40,7 @@ namespace FolderCreator
                     }
 
                     List<string> names = templates.Select(t => t.Name).ToList();
-                    ContextMenuWindow contextMenuWindow = new ContextMenuWindow(names);
+                    ContextMenuWindow contextMenuWindow = new ContextMenuWindow(targetPath, names);
                     contextMenuWindow.Show();
                 }
                 else
@@ -49,8 +51,8 @@ namespace FolderCreator
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in startup: {ex.Message}");
-                MessageBox.Show($"Error during startup: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Błąd przy uruchamianiu aplikacji: {ex.Message}");
+                MessageBox.Show($"Błąd przy uruchamianiu aplikacji: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 
                 // Always try to show main window if possible
                 try
