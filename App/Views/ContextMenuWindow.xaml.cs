@@ -1,7 +1,9 @@
 ﻿using FolderCreator.Models;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace FolderCreator.Views
 {
@@ -13,12 +15,30 @@ namespace FolderCreator.Views
         {
             InitializeComponent();
             _templateNames = templateNames;
-
-            // Optional: Position the window where the mouse is.
-            this.Left = Mouse.GetPosition(this).X;
-            this.Top = Mouse.GetPosition(this).Y;
-
+            this.Loaded += ContextMenuWindow_Loaded;
             PopulateMenuItems();
+        }
+
+        private void ContextMenuWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (GetCursorPos(out POINT mousePos))
+            {
+                // Get the PresentationSource for this window to handle DPI scaling.
+                PresentationSource source = PresentationSource.FromVisual(this);
+                if (source != null)
+                {
+                    Matrix transform = source.CompositionTarget.TransformFromDevice;
+                    Point wpfMousePos = transform.Transform(new Point(mousePos.X, mousePos.Y));
+                    this.Left = wpfMousePos.X;
+                    this.Top = wpfMousePos.Y;
+                }
+                else
+                {
+                    // Fallback for cases where PresentationSource is not available.
+                    this.Left = mousePos.X;
+                    this.Top = mousePos.Y;
+                }
+            }
         }
 
         private void PopulateMenuItems()
@@ -48,5 +68,18 @@ namespace FolderCreator.Views
         {
             this.Close();
         }
+
+        #region P/Invoke
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetCursorPos(out POINT lpPoint);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct POINT
+        {
+            public int X;
+            public int Y;
+        }
+        #endregion
     }
 }
