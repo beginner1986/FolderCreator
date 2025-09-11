@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Material.Icons.WPF" Version="2.4.1" />

@@ -2,7 +2,7 @@
 	 xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
 	<Package 
 		Name="Aplikacja Folderowa" 
-		Version="0.9.1.0" 
+		Version="0.9.9" 
 		Manufacturer="beginner1986" 
 		UpgradeCode="037e74e1-35cb-40ea-a1f4-df1a0aef7ab7">
 
@@ -18,6 +18,7 @@
 			<ComponentGroupRef Id="AppComponent" />
 			<ComponentRef Id="ApplicationShortcutDesktop" />
 			<ComponentRef Id="ContextMenuComponent" />
+			<ComponentRef Id="CleanupAppDataFolder" />
 		</Feature>
 	</Package>
 </Wix>

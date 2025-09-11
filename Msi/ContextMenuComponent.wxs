@@ -4,21 +4,21 @@
         <!-- Add Registry entries for context menu -->
         <Component Id="ContextMenuComponent" Guid="*">
             <!-- Background (empty space) context menu -->
-            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa">
-                <RegistryValue Type="string" Value="Aplikacja Folderowa" />
+            <RegistryKey Root="HKCR" Key="Directory\Background\shell\AplikacjaFolderowa">
+                <RegistryValue Name="MUIVerb" Type="string" Value="Aplikacja Folderowa" />
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
-            </RegistryKey>
-            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\Background\shell\AplikacjaFolderowa\command">
-                <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%V&quot;" />
+                <RegistryKey Key="command">
+                    <RegistryValue Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; -contextmenu &quot;%V&quot;" Type="string" />
+                </RegistryKey>
             </RegistryKey>
                 
             <!-- Folder context menu -->
-            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa">
-                <RegistryValue Type="string" Value="Aplikacja Folderowa" />
+            <RegistryKey Root="HKCR" Key="Directory\shell\AplikacjaFolderowa">
+                <RegistryValue Name="MUIVerb" Type="string" Value="Aplikacja Folderowa" />
                 <RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]favicon.ico" />
-            </RegistryKey>
-            <RegistryKey Root="HKLM" Key="Software\Classes\Directory\shell\AplikacjaFolderowa\command">
-                <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; &quot;%1&quot;" />
+                <RegistryKey Key="command">
+                    <RegistryValue Value="&quot;[INSTALLFOLDER]FolderCreator.exe&quot; -contextmenu &quot;%1&quot;" Type="string" />
+                </RegistryKey>
             </RegistryKey>
         </Component>
     </Fragment>

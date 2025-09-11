@@ -4,14 +4,21 @@
 
 Aplikacja Folderowa to narzêdzie WPF, które umo¿liwia tworzenie struktury folderów na podstawie predefiniowanych szablonów. U¿ytkownik mo¿e definiowaæ szablony folderów, edytowaæ je oraz u¿ywaæ do szybkiego tworzenia zestawów folderów w wybranej lokalizacji.
 
+## Wersja
+
+**Aktualna wersja:** v.0.9.9 beta
+
 ## Funkcje
 
 *   **Szablony folderów:** Definiowanie hierarchicznych szablonów folderów z mo¿liwoœci¹ dodawania podfolderów.
 *   **Edycja szablonów:** Mo¿liwoœæ modyfikacji istniej¹cych szablonów folderów.
 *   **Wyszukiwanie:** Wyszukiwanie szablonów po nazwie i zawartoœci.
-*   **U¿ywanie szablonów:** Szybkie tworzenie struktury folderów na podstawie szablonu.
+*   **Zmienne w szablonach:** Mo¿liwoœæ u¿ywania zmiennych w nazwach folderów w formacie {nazwa_zmiennej}.
+*   **U¿ywanie szablonów:** Szybkie tworzenie struktury folderów na podstawie szablonu z opcj¹ podgl¹du w Eksploratorze.
 *   **Interfejs u¿ytkownika:** Intuicyjny interfejs WPF.
 *   **Skróty klawiszowe:** Obs³uga skrótów klawiszowych dla szybszej pracy (Ctrl+N - Nowy szablon, Ctrl+E - Edytuj szablon, etc.).
+*   **Menu kontekstowe:** Mo¿liwoœæ tworzenia struktury folderów przy u¿yciu menu kontekstowego systemu Windows.
+*   **Instalator MSI:** Aplikacja jest dostarczana z instalatorem MSI dla ³atwej instalacji. Przy odinstalowaniu wszystkie pliki i klucze rejestru s¹ usuwane. UWAGA : Szablony u¿ytkownika równie¿ zostan¹ usuniête.
 
 ## Wymagania
 
@@ -22,20 +29,20 @@ Aplikacja Folderowa to narzêdzie WPF, które umo¿liwia tworzenie struktury folder
 ### Budowanie instalatora MSI
 
 Aby zbudowaæ instalator MSI aplikacji:
-1. Otwórz PowerShell lub Windows Terminal.
-2. PrzejdŸ do katalogu g³ównego projektu.
-3. Uruchom skrypt build.bat (wymaga PowerShell):
+1.  Otwórz PowerShell lub Windows Terminal.
+2.  PrzejdŸ do katalogu g³ównego projektu.
+3.  Uruchom skrypt build.bat (wymaga PowerShell):
     ```powershell
     .\build.bat
     ```
-4. Po zakoñczeniu procesu, instalator MSI zostanie utworzony w folderze `build`.
+4.  Po zakoñczeniu procesu, instalator MSI zostanie utworzony w folderze `build`.
 
 ### Manualne budowanie aplikacji (bez instalatora)
 
 Aby rêcznie zbudowaæ tylko aplikacjê .NET bez tworzenia instalatora:
-1. Otwórz terminal lub wiersz poleceñ.
-2. PrzejdŸ do katalogu `App`, gdzie znajduje siê plik projektu.
-3. Wykonaj nastêpuj¹ce polecenie, aby zbudowaæ projekt w trybie Release:
+1.  Otwórz terminal lub wiersz poleceñ.
+2.  PrzejdŸ do katalogu `App`, gdzie znajduje siê plik projektu.
+3.  Wykonaj nastêpuj¹ce polecenie, aby zbudowaæ projekt w trybie Release:
     ```bash
     dotnet publish -c Release -o ./publish
     ```

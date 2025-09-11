@@ -6,40 +6,54 @@ powershell -Command "Write-Host '           BUILD PROCESS STARTED        ' -Fore
 powershell -Command "Write-Host '========================================' -ForegroundColor Green"
 echo.
 
-powershell -Command "Write-Host '[1/4] Preparing to build application...' -ForegroundColor Cyan"
-if not exist "App" (
-    powershell -Command "Write-Host 'ERROR: App directory not found!' -ForegroundColor Red"
+powershell -Command "Write-Host '[1/3] Building solution...' -ForegroundColor Cyan"
+if not exist "FolderCreator.sln" (
+    powershell -Command "Write-Host 'ERROR: Solution file not found!' -ForegroundColor Red"
     exit /b 1
 )
 
-powershell -Command "Write-Host '[2/4] Building .NET application...' -ForegroundColor Cyan"
-cd App
-dotnet publish -c Release -o ../temp
+rem Build the solution
+dotnet build "FolderCreator.sln" -c Release
 if %ERRORLEVEL% neq 0 (
-    powershell -Command "Write-Host 'ERROR: .NET publish failed!' -ForegroundColor Red"
+    powershell -Command "Write-Host 'ERROR: Solution build failed!' -ForegroundColor Red"
     exit /b %ERRORLEVEL%
 )
-powershell -Command "Write-Host 'Application build completed successfully.' -ForegroundColor Green"
+powershell -Command "Write-Host 'Solution build completed successfully.' -ForegroundColor Green"
 echo.
 
-powershell -Command "Write-Host '[3/4] Building MSI installer...' -ForegroundColor Cyan"
-cd ../Msi
-msbuild Msi.wixproj /t:Build /p:Platform=x64 /p:Configuration=Release /p:BuildProjectReferences=false /p:OutputPath=../build
-if %ERRORLEVEL% neq 0 (
-    powershell -Command "Write-Host 'ERROR: MSI build failed!' -ForegroundColor Red"
-    exit /b %ERRORLEVEL%
+powershell -Command "Write-Host '[2/3] Preparing publish folder...' -ForegroundColor Cyan"
+set "ROOT_DIR=%CD%"
+set "PUBLISH_DIR=%ROOT_DIR%\build"
+
+if not exist "!PUBLISH_DIR!" (
+    mkdir "!PUBLISH_DIR!"
 )
-powershell -Command "Write-Host 'MSI build completed successfully.' -ForegroundColor Green"
-echo.
 
-powershell -Command "Write-Host '[4/4] Cleaning up temporary files...' -ForegroundColor Cyan"
-cd ..
-rmdir /s /q temp
-if %ERRORLEVEL% neq 0 (
-    powershell -Command "Write-Host 'WARNING: Could not clean up temp directory.' -ForegroundColor Yellow"
+rem Locate the MSI file
+set "MSI_SOURCE=%ROOT_DIR%\Msi\bin\x86\Release\Msi.msi"
+set "MSI_DESTINATION=%PUBLISH_DIR%\Aplikacja Folderowa.msi"
+
+if exist "!MSI_SOURCE!" (
+    copy /y "!MSI_SOURCE!" "!MSI_DESTINATION!"
+    if %ERRORLEVEL% neq 0 (
+        powershell -Command "Write-Host 'ERROR: Failed to copy MSI file to publish folder!' -ForegroundColor Red"
+        exit /b %ERRORLEVEL%
+    )
+    powershell -Command "Write-Host 'MSI file copied and renamed successfully.' -ForegroundColor Green"
 ) else (
-    powershell -Command "Write-Host 'Cleanup completed successfully.' -ForegroundColor Green"
+    powershell -Command "Write-Host 'ERROR: MSI file not found!' -ForegroundColor Red"
+    exit /b 1
 )
+echo.
+
+powershell -Command "Write-Host '[3/3] Cleaning up build artifacts...' -ForegroundColor Cyan"
+for /d %%d in ("%ROOT_DIR%\*\bin") do (
+    rmdir /s /q "%%d"
+)
+for /d %%d in ("%ROOT_DIR%\*\obj") do (
+    rmdir /s /q "%%d"
+)
+powershell -Command "Write-Host 'Build artifacts cleaned up successfully.' -ForegroundColor Green"
 echo.
 
 powershell -Command "Write-Host '========================================' -ForegroundColor Green"
